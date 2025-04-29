@@ -104,7 +104,7 @@ fs.readdirSync(contentDirRoot).forEach(item => {
                     ...frontMatter, // Include front matter data (like title)
                     date: date,
                     content: htmlContent,
-                    path: `/posts/${slug}.html` // Path for linking in the list
+                    path: `${siteConfig.basePath}/posts/${slug}.html` // Path for linking in the list
                 };
 
                 // Generate individual post HTML
@@ -117,7 +117,7 @@ fs.readdirSync(contentDirRoot).forEach(item => {
                 postsData.push({
                     title: frontMatter.title || slug.replace(/-/g, ' '), // Use title from front matter or generate from slug
                     date: date,
-                    path: `/posts/${slug}.html`
+                    path: `${siteConfig.basePath}/posts/${slug}.html`
                 });
             }
         });

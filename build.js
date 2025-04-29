@@ -39,6 +39,16 @@ const pageTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, '
 
 const postsData = [];
 
+// This is to fix the image links in the markdown files
+const renderer = new marked.Renderer();
+
+renderer.image = (href, title, text) => {
+  const fixedHref = href.startsWith('/') ? `${siteConfig.basePath}${href}` : href;
+  return `<img src="${fixedHref}" alt="${text}" ${title ? `title="${title}"` : ''}>`;
+};
+
+marked.use({ renderer });
+
 // Read and process markdown files from content directory
 fs.readdirSync(contentDirRoot).forEach(item => {
     const itemPath = path.join(contentDirRoot, item);
@@ -52,6 +62,7 @@ fs.readdirSync(contentDirRoot).forEach(item => {
         const slug = path.basename(item, path.extname(item)); // e.g., 'about' from 'about.md'
 
         const pageData = {
+            basePath: siteConfig.basePath, // Pass base path
             siteName: siteConfig.name, // Pass site name
             author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
@@ -86,6 +97,7 @@ fs.readdirSync(contentDirRoot).forEach(item => {
 
                 // Prepare data for the post template
                 const postData = {
+                    basePath: siteConfig.basePath, // Pass base path
                     pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
                     siteName: siteConfig.name, // Pass site name
                     author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
@@ -117,6 +129,7 @@ postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
 
 // Generate index page (list of posts)
 const indexHtml = listTemplate({ 
+    basePath: siteConfig.basePath,
     siteName: siteConfig.name, 
     pageTitle: siteConfig.name, 
     author: siteConfig.author,

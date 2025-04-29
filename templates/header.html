@@ -6,7 +6,7 @@
     <title>{{ pageTitle }}</title>
     <meta name="description" content="{{ pageDescription }}">
     <meta name="author" content="{{ author }}">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="{{ basePath }}/css/styles.css">
 </head>
 <body>
     <header>
@@ -14,7 +14,7 @@
         <nav>
             <ul>
                 <li><a href="https://example.com" target="_blank">Example Link</a></li>
-                <li><a href="/april-ssg">About April⋅SSG</a></li>
+                <li><a href="{{ basePath }}/april-ssg">About April⋅SSG</a></li>
             </ul>
         </nav>
     </header>

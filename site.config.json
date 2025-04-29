@@ -10,5 +10,8 @@
         "images": "images",
         "css": "css",
         "output": "public"
-    }
+    },
+
+    "basePath": ""
+
 }

@@ -1,0 +1,26 @@
+{
+  "name": "april-ssg",
+  "version": "1.0.0",
+  "description": "A simple, lightweight static site generator",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "http-server public -p 8080",
+    "dev": "concurrently \"nodemon --watch content --watch templates --watch css --ext html,md,css --exec \\\"npm run build\\\"\" \"http-server public -p 8080 -c-1\"",
+    "clean": "rm -rf public"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "gray-matter": "^4.0.3",
+    "handlebars": "^4.7.8",
+    "marked": "^12.0.2"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "http-server": "^14.1.1",
+    "nodemon": "^3.1.10"
+  }
+}

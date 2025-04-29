@@ -1,0 +1,14 @@
+{
+    "name": "April⋅SSG",
+    "description": "A simple, lightweight static site generator",
+    "author": "Vishnu Haridas",
+    
+    "dirs": {
+        "templates": "templates",
+        "content": "content",
+        "extras": "extras",
+        "images": "images",
+        "css": "css",
+        "output": "public"
+    }
+}

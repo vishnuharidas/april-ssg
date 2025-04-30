@@ -52,9 +52,16 @@ renderer.image = (href, title, text) => {
 };
 marked.use({ renderer });
 
+const navItems = siteConfig.menu.map(item => {
+    return {
+        title: item.title,
+        path: item.path.startsWith("http") ? item.path : `${siteConfig.basePath}${item.path}`,
+    };
+})
+
 // Read and process markdown files from pages directory
 fs.readdirSync(pagesDir).forEach(file => {
-    
+
     const filePath = path.join(pagesDir, file);
     const stat = fs.statSync(filePath);
 
@@ -66,6 +73,7 @@ fs.readdirSync(pagesDir).forEach(file => {
         const slug = path.basename(file, path.extname(file)); // e.g., 'about' from 'about.md'
 
         const pageData = {
+            navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
             siteName: siteConfig.name, // Pass site name
             author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
@@ -105,6 +113,7 @@ fs.readdirSync(postsDir).forEach(file => {
 
         // Prepare data for the post template
         const postData = {
+            navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
             siteName: siteConfig.name, // Pass site name
@@ -135,6 +144,7 @@ postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
 
 // Generate index page (list of posts)
 const indexHtml = listTemplate({
+    navItems: navItems,
     basePath: siteConfig.basePath,
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
@@ -144,22 +154,24 @@ const indexHtml = listTemplate({
 }); // Pass site name
 fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
 
-console.log('Processed index page');
+console.log('✅ Processed index page');
 
 // Copy the folder /images to the public directory
 const publicImagesDir = path.join(publicDir, 'images');
 fs.ensureDirSync(publicImagesDir);
 fs.copySync(imagesDir, publicImagesDir, { overwrite: true });
-console.log('Copied images to public directory');
+console.log('✅ Copied images to public directory');
 
 // Copy the single CSS file specified in the config to the public/css directory
 const publicCssDir = path.join(publicDir, 'css');
 fs.ensureDirSync(publicCssDir);
 fs.copySync(cssFile, path.join(publicCssDir, path.basename(cssFile)), { overwrite: true });
-console.log('Copied CSS to public directory');
+console.log('✅ Copied CSS to public directory');
 
 // Copy the contents of /extras to the public directory
 fs.copySync(extrasDir, publicDir, { overwrite: true });
-console.log('Copied extras to public directory');
+console.log('✅ Copied extras to public directory');
 
-console.info('SUCCESS: Build completed!');
+console.info('-----------------------------------------------------------------------------')
+console.info('✅ SUCCESS: Build completed. Run `npm run dev[-sample]` to start the server.');
+console.info('-----------------------------------------------------------------------------')

@@ -2,13 +2,18 @@
     "name": "April⋅SSG Sample Site",
     "description": "A sample site to demonstrate the usage of April⋅SSG",
     "author": "Vishnu Haridas",
+
     "dirs": {
         "templates": "templates",
-        "content": "sample-content",
-        "extras": "sample-extras",
-        "images": "sample-images",
-        "css": "css",
+        "css": "templates/styles.css",
+
+        "posts": "sample-content/posts",
+        "pages": "sample-content/pages",
+        "extras": "sample-content/extras",
+        "images": "sample-content/images",
+
         "output": "public"
     },
+
     "basePath": ""
 }

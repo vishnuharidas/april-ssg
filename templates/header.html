@@ -13,8 +13,9 @@
         <h1><a href="{{ basePath }}/">{{ siteName }}</a></h1>
         <nav>
             <ul>
-                <li><a href="https://example.com" target="_blank">Example Link</a></li>
-                <li><a href="{{ basePath }}/april-ssg">About April⋅SSG</a></li>
+                {{#each navItems}}
+                <li><a href="{{ this.path }}">{{ this.title }}</a></li>
+                {{/each}}
             </ul>
         </nav>
     </header>

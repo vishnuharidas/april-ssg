@@ -1,5 +1,6 @@
-# April⋅SSG - a lightweight, simple static site generator
-
+---
+title: About April⋅SSG
+---
 April⋅SSG is a lightweight, super simple static site generator written in JavaScript. It focuses on minimalism and ease of use, making it an ideal choice for developers who want to create simple static websites without unnecessary complexity.
 
 April⋅SSG was born out of my frustration with tools like Jekyll and Hugo. They always seemed to overcomplicate things when all I wanted was a clean, minimalistic design for my site. After countless hours of trial and error, I decided to build a very simple static site generator with the help of Copilot. I'll be sharing the full story in an upcoming blog post—stay tuned!
@@ -107,4 +108,4 @@ You can customize the site's layout by editing the HTML files in the `templates`
 
 Copyright (c) 2025 Vishnu Haridas
 
-This software is published under MIT License. See [LICENSE](LICENSE.txt) for more details
+This software is published under MIT License. See [LICENSE](license) for more details

@@ -1,0 +1,25 @@
+{
+    "name": "April⋅SSG Sample Site",
+    "description": "A sample site to demonstrate the usage of April⋅SSG",
+    "author": "Vishnu Haridas",
+    "dirs": {
+        "templates": "templates",
+        "css": "templates/styles.css",
+        "posts": "sample-content/posts",
+        "pages": "sample-content/pages",
+        "extras": "sample-content/extras",
+        "images": "sample-content/images",
+        "output": "public"
+    },
+    "menu": [
+        {
+            "title": "Repository",
+            "path": "https://github.com/vishnuharidas/april-ssg"
+        },
+        {
+            "title": "About April⋅SSG",
+            "path": "/april-ssg"
+        }
+    ],
+    "basePath": ""
+}

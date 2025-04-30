@@ -76,6 +76,7 @@ nav ul {
     padding: 0;
     margin: 0;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
@@ -128,12 +129,11 @@ pre {
     }
 
     nav ul {
-        flex-direction: column;
         align-items: center;
     }
 
     nav ul li {
-        margin: 10px 0;
+        margin: 10px 8px;
     }
 }
 

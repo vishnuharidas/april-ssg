@@ -40,6 +40,7 @@ Handlebars.registerPartial('footer', footerTemplate);
 // Compile templates
 const postTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'post.html'), 'utf-8'));
 const listTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'list.html'), 'utf-8'));
+const e404Template = Handlebars.compile(fs.readFileSync(path.join(templateDir, '404.html'), 'utf-8'));
 const pageTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'page.html'), 'utf-8'));
 
 const postsData = [];
@@ -153,6 +154,18 @@ const indexHtml = listTemplate({
     items: postsData
 }); // Pass site name
 fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
+
+// Generate 404 page (list of posts)
+const e404Html = e404Template({
+    navItems: navItems,
+    basePath: siteConfig.basePath,
+    siteName: siteConfig.name,
+    pageTitle: siteConfig.name,
+    author: siteConfig.author,
+    title: 'All Posts',
+    items: postsData
+}); // Pass site name
+fs.writeFileSync(path.join(publicDir, '404.html'), e404Html);
 
 console.log('✅ Processed index page');
 

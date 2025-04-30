@@ -53,7 +53,7 @@ header {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    
+
 }
 
 header h1 {
@@ -65,6 +65,7 @@ header h1 a {
     color: #737373;
     text-decoration: none;
 }
+
 header h1 a:hover {
     color: #323232;
     text-decoration: none;
@@ -93,7 +94,7 @@ article>h2 {
     font-size: 1.9em;
 }
 
-article>date{
+article>date {
     font-size: 0.9em;
     color: var(--footer-text-color);
 }
@@ -120,6 +121,15 @@ pre {
     padding: 10px;
     border-radius: 10px;
     overflow-x: auto;
+}
+
+april-ssg-notfound {
+    display: block;
+    color: #4b4b4b;
+    padding: 12px;
+    background: #fdebeb;
+    border: 2px solid #a6a6a6;
+    font-size: medium;
 }
 
 @media (max-width: 768px) {

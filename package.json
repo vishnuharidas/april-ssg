@@ -4,10 +4,14 @@
   "description": "A simple, lightweight static site generator",
   "main": "index.js",
   "scripts": {
-    "build": "node build.js",
+    "build": "node build.js site.config.json",
     "serve": "http-server public -p 8080",
     "dev": "concurrently \"nodemon --watch content --watch templates --watch css --ext html,md,css --exec \\\"npm run build\\\"\" \"http-server public -p 8080 -c-1\"",
-    "clean": "rm -rf public"
+    "clean": "rm -rf public",
+
+    "build-sample": "node build.js sample-site.config.json",
+    "serve-sample": "http-server public -p 8080",
+    "dev-sample": "concurrently \"nodemon --watch sample-content --watch templates --watch css --ext html,md,css --exec \\\"npm run build-sample\\\"\" \"http-server public -p 8080 -c-1\""
   },
   "keywords": [],
   "author": "",

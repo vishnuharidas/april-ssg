@@ -117,7 +117,7 @@ fs.readdirSync(contentDirRoot).forEach(item => {
                 postsData.push({
                     title: frontMatter.title || slug.replace(/-/g, ' '), // Use title from front matter or generate from slug
                     date: date,
-                    path: `${siteConfig.basePath}/posts/${slug}.html`
+                    path: `${siteConfig.basePath}/posts/${slug}`
                 });
             }
         });

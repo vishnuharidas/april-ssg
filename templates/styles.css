@@ -9,7 +9,7 @@
     --header-text-color: #2c2c2c;
     --border-color: #ddd;
     --footer-text-color: #666;
-    --code-bg-color: #e5e5e5;
+    --code-bg-color: #eeeeee;
     --responsive-font-size-md: 1.3em;
     --responsive-font-size-sm: 1.1em;
 }
@@ -123,6 +123,11 @@ pre {
     overflow-x: auto;
 }
 
+code {
+    background-color: var(--code-bg-color);
+    padding: 2px 4px;
+}
+
 april-ssg-notfound {
     display: block;
     color: #4b4b4b;
@@ -130,6 +135,10 @@ april-ssg-notfound {
     background: #fdebeb;
     border: 2px solid #a6a6a6;
     font-size: medium;
+}
+
+april-ssg-mono {
+    font-family: monospace;
 }
 
 @media (max-width: 768px) {

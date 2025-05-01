@@ -116,6 +116,20 @@ This repository includes a GitHub Actions workflow (`.github/workflows/sample-de
 
 ---
 
+## 🛠 GitLab Pages Workflow
+
+Deploying to GitLab Pages is straightforward with the included `.gitlab-ci.yml` file. This configuration automates the build and deployment process. By default, GitLab Pages are published from the root directory, so no additional base path configuration is required.
+
+To use this workflow:
+
+1. Ensure your repository contains the `.gitlab-ci.yml` file
+2. Push your changes to the `main` branch
+3. GitLab will automatically build and deploy your site to GitLab Pages
+
+> **Note:** You can customize the `.gitlab-ci.yml` file to suit your specific requirements, such as changing the build directory or adding additional steps.
+
+---
+
 ## 🎨 Customizing the Look and Feel
 
 ```

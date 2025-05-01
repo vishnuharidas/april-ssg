@@ -31,6 +31,18 @@ fs.ensureDirSync(publicDir);
 fs.emptyDirSync(publicDir);
 fs.ensureDirSync(publicPostsDir);
 
+// Add Handlebar helper to "include" partials
+Handlebars.registerHelper('include', function (partialPath, options) {
+    const filePath = path.resolve(templateDir, partialPath);
+    try {
+        const content = fs.readFileSync(filePath, 'utf8');
+        return new Handlebars.SafeString(content);
+    } catch (err) {
+        console.error(`Error including partial: ${partialPath}`);
+        return '';
+    }
+});
+
 // Register Handlebars partials
 const headerTemplate = fs.readFileSync(path.join(templateDir, 'header.html'), 'utf-8');
 const footerTemplate = fs.readFileSync(path.join(templateDir, 'footer.html'), 'utf-8');

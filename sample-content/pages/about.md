@@ -1,111 +1,138 @@
 ---
 title: About April⋅SSG
 ---
-April⋅SSG is a lightweight, super simple static site generator written in JavaScript. It focuses on minimalism and ease of use, making it an ideal choice for developers who want to create simple static websites without unnecessary complexity.
+**April⋅SSG** is a lightweight, super-simple static site generator written in JavaScript. It focuses on **minimalism and ease of use**, making it an ideal choice for developers who want to create static websites without unnecessary complexity.
 
-April⋅SSG was born out of my frustration with tools like Jekyll and Hugo. They always seemed to overcomplicate things when all I wanted was a clean, minimalistic design for my site. After countless hours of trial and error, I decided to build a very simple static site generator with the help of Copilot. I'll be sharing the full story in an upcoming blog post—stay tuned!
+April⋅SSG was born out of my frustration with tools like Jekyll and Hugo. They always seemed to overcomplicate things when all I wanted was a clean, minimalistic site. After countless hours of trial and error, I built a simple static site generator with the help of Copilot. (I'll be sharing the full story in an upcoming blog post — stay tuned!)
 
-## Installing April⋅SSG
+---
 
-Installing April⋅SSG is easy. You create a clone of this repository, update contents, and your static site is ready!
+## 🚀 Installing April⋅SSG
 
-First, clone the repository:
+Getting started is easy. Clone or fork this repository and you're ready to build your static site!
 
-```shell
-$ git clone https://github.com/vishnuharidas/april-ssg
+```bash
+git clone https://github.com/vishnuharidas/april-ssg
+cd april-ssg
+npm install
 ```
 
-Install dependencies:
+---
 
-```shell
-$ npm install
+## 🧪 Running the Sample Website
+
+This repository includes sample posts, a page, and images to help you get started. They serve as a guide for understanding the structure and creating your own content.
+
+To build the sample site:
+
+```bash
+npm run build-sample
 ```
 
-### Running the Sample Website
+The generated site will be available inside the `public/` folder.
 
-The repository includes sample posts, a page, and images to get you started. These examples serve as a practical guide, allowing you to quickly understand the structure and begin creating your own content. To build the sample site:
+To preview the site locally:
 
-```shell
-$ npm run build-sample
+```bash
+npm run dev-sample
 ```
 
-Generated site is available inside the `public/` folder.
+Visit [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser.
 
-To preview the static site locally:
+> **Note:** `npm run dev-sample` watches for changes and automatically rebuilds. Just refresh the browser to see updates.
 
-```shell
-$ npm run dev-sample
+---
+
+## ✍️ Setting Up April⋅SSG for Your Own Content
+
+Once you've tested the sample site, you can configure April⋅SSG for your own content.
+
+### Manual Setup
+
+1. Copy `/sample-content` to `/content`
+2. Copy `sample-site.config.json` to `site.config.json`
+3. Update the config file to match your needs
+
+### One-Liner Setup
+
+If you'd rather skip the manual steps, run:
+
+```bash
+npm run setup
 ```
 
-Visit `http://127.0.0.1:8080` to see the sample website in action. Stop the server by pressing Ctrl+C.
+This command creates the necessary folders and config file, so you can start writing immediately.
 
-### Setting up April⋅SSG
+To serve your site locally:
 
-Once the sample website is up and running successfully, you can set up April⋅SSG to add your content. The set up is very simple: copy the `sample-content` folder to a new `content` folder, and copy the file `sample-site.config.json` to `site.config.json` and update.
-
-If you are lazy to do so, you can run this command to do this:
-
-```shell
-$ npm run setup
+```bash
+npm run dev
 ```
 
-This will create the content folder and the configuration file for you, and you can start creating contents right away.
+Visit [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser.
 
-To preview the static site locally, run the below command and visit `http://127.0.0.1:8080` to see the website in action.
+> **Note:** `npm run dev` watches for file changes and rebuilds your site automatically.
 
-```shell
-$ npm run dev
-```
+---
 
-## Folder Structure
+## 📁 Folder Structure
 
-April⋅SSG follows a very simple folder structure. Everything inside the `content` folder belogs to you.
+April⋅SSG uses a simple, minimal folder structure:
 
-```
+```text
 content/
-├── posts/
-│   ├── <yyyy-mm-dd>-<slug-this-post>.md  (Copied directly to /public/posts/slug-this-post.html)
-│   └── <yyyy-mm-dd>-<slug-another-post>.md
-├── pages/
-│   ├── page1.md      (Copied directly to /public/page1.html)
-│   └── page2.md
-├── images/
-│   ├── image1.jpg    (Copied directly to /public/images/image1.jpg)
-│   └── image2.jpg
-└── extras/           (Copied directly to /public/*)
-    ├── some-good-file.html
-    └── cv/
-        └── my_cv.pdf
+├── posts/      → Your blog posts
+├── pages/      → Standalone pages like about.md
+├── images/     → Images
+└── extras/     → Any other files (PDFs, raw HTML, etc.)
 ```
 
-  *   **Posts:** Markdown files placed in `/content/posts/` (following the `<yyyy-mm-dd>-<slug>.md` format) are converted into individual post pages using the `post.html` template. These posts will also be listed on the main index page.
-  *   **Pages:** Markdown files placed in `/content/pages/` (e.g., `about.md`) are converted into standalone pages using the `page.html` template.
-  *   **Images:** Files within the `/content/images/` folder are copied directly to `/public/images/`.
-  *   **Extras:** Any files or folders you place in the `/content/extras/` directory (e.g., PDFs, specific HTML files, subdirectories) are copied directly into the `/public/` directory. Be mindful not to use filenames that might clash with the generated page or post filenames.
-  
-### Output Directory
-All generated HTML files (posts and pages) are placed in the `/public/` directory. You can upload this file to your website, or set up GitHub Pages and copy this folder. The repository already comes with a GitHub Pages workflow.
+### How It Works
 
-## Configuration
+- **`posts/`** — Markdown files named like `2025-04-29-my-post.md` become `/public/posts/my-post.html`. These are listed on the index page.
+- **`pages/`** — Markdown pages (like `about.md`) become standalone pages at `/public/about.html`.
+- **`images/`** — Files in `content/images/` are copied directly to `public/images/`.
+- **`extras/`** — All files and folders in `extras/` are copied as-is into `public/`. Avoid naming collisions.
 
-Modify `site.config.json` file to configure your directories, navigation menu, and base path (if hosting inside a directory).
+> **Note:** You can change these folder mappings in `site.config.json`.
 
-## Modifying Look and Feel
+---
 
-```
+## 📤 Output Directory
+
+All generated HTML, assets, and copied files are placed in the `/public/` directory. You can deploy this to any static hosting platform (e.g., GitHub Pages, Firebase, Amazon S3, etc.).
+
+---
+
+## 🛠 GitHub Pages Workflow
+
+This repository includes a GitHub Actions workflow (`.github/workflows/sample-deploy.yml`) that builds and deploys the sample site to GitHub Pages.
+
+> **Note for cloners/forkers:**  
+> The workflow is **guarded** to run only in the original repo (`vishnuharidas/april-ssg`). To use April⋅SSG with GitHub Pages in your own repo:
+>
+> 1. Copy the workflow file to your repo (e.g., `.github/workflows/deploy.yml`)
+> 2. Remove or modify the repository guard condition
+> 3. Update the `BASE_PATH` and config file name in the workflow as needed
+
+---
+
+## 🎨 Customizing the Look and Feel
+
+```text
 templates/
-├── footer.html     (Footer content - copyright, etc.)
-├── header.html     (Header - title, meta, etc.)
-├── list.html       (Body of a listing page. Eg. home page uses this.)
-├── page.html       (Body of a normal page (/content/file.md))
-├── post.html       (Body of a post page (/content/posts/...md))
-└── styles.css      (All CSS styles)
+├── footer.html     → Footer section for all pages
+├── header.html     → Header section for all pages
+├── list.html       → Layout for listing pages (e.g. homepage)
+├── page.html       → Template for standalone pages
+├── post.html       → Template for blog posts
+└── styles.css      → All your custom styles
 ```
 
-You can customize the site's layout by editing the HTML files in the `templates` folder. To change colors and styles, modify `styles.css`. All modifications will be reflected in the next build.
+You can fully customize your site by editing the HTML templates and `styles.css`. All changes will be reflected in the next build.
 
-## License
+---
 
-Copyright (c) 2025 Vishnu Haridas
+## 📄 License
 
-This software is published under MIT License. See [LICENSE](license) for more details
+MIT License © 2025 [Vishnu Haridas](https://iamvishnu.com). See [LICENSE](LICENSE) for full details.

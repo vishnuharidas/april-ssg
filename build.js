@@ -89,6 +89,7 @@ fs.readdirSync(pagesDir).forEach(file => {
             navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
             siteName: siteConfig.name, // Pass site name
+            pageDescription : frontMatter.description || siteConfig.description, 
             author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
             pageDesciption: frontMatter.content || '', // Use description from front matter
@@ -124,10 +125,13 @@ fs.readdirSync(postsDir).forEach(file => {
         // Convert markdown to HTML
         const htmlContent = marked.parse(markdownContent);
 
+        console.log(frontMatter.description);
+
         // Prepare data for the post template
         const postData = {
             navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
+            pageDescription : frontMatter.description || siteConfig.description, 
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
             siteName: siteConfig.name, // Pass site name
             author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
@@ -161,6 +165,7 @@ const indexHtml = listTemplate({
     basePath: siteConfig.basePath,
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
+    pageDescription : siteConfig.description, 
     author: siteConfig.author,
     title: 'All Posts',
     items: postsData
@@ -173,6 +178,7 @@ const e404Html = e404Template({
     basePath: siteConfig.basePath,
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
+    pageDescription : siteConfig.description, 
     author: siteConfig.author,
     title: 'All Posts',
     items: postsData

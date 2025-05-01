@@ -2,7 +2,7 @@
 <april-ssg-notfound>That's a 404. You might be interested in reading some of these articles:</april-ssg-notfound>
 <ul>
     {{#each items}}
-    <li><code>{{ this.date }}</code> — <a href="{{ this.path }}">{{ this.title }}</a></li>
+    <li><april-ssg-mono>{{ this.date }}</april-ssg-mono> — <a href="{{ this.path }}">{{ this.title }}</a></li>
     {{/each}}
 </ul>
 {{> footer }}

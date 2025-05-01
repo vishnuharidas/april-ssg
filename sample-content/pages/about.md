@@ -1,5 +1,6 @@
 ---
 title: About April⋅SSG
+description: A minimalistic static site generator for developers who value simplicity.
 ---
 **April⋅SSG** is a lightweight, super-simple static site generator written in JavaScript. It focuses on **minimalism and ease of use**, making it an ideal choice for developers who want to create static websites without unnecessary complexity.
 

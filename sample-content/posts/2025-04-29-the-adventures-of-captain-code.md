@@ -1,5 +1,6 @@
 ---
 title: "The Adventures of Captain Code"
+description: "Follow Captain Code and Syntaxia as they debug a critical issue in the GalaxyRouter module, navigating the complexities of space and code."
 ---
 
 # Chapter 1: The Bug Hunt

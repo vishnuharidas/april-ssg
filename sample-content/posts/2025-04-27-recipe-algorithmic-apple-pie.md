@@ -1,5 +1,6 @@
 ---
 title: "Recipe: Algorithmic Apple Pie"
+description: "Learn how to bake a perfect apple pie with this algorithmic recipe that combines culinary art and computational precision."
 ---
 
 # Algorithmic Apple Pie v1.0

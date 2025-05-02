@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>{{ pageTitle }}</title>
     <meta charset="UTF-8">
@@ -10,10 +11,11 @@
     <meta property="og:title" content="{{ pageTitle }}">
     <meta property="og:description" content="{{ pageDescription }}">
     <link rel="stylesheet" href="{{ basePath }}/css/styles.css">
-
-    {{ include "feature/highlight.html"  }}
-    
+    {{#if needsHighlightJS}}
+    {{> feature/highlight }}
+    {{/if}}
 </head>
+
 <body>
     <header>
         <h1><a href="{{ basePath }}/">{{ siteName }}</a></h1>

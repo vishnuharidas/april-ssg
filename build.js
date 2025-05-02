@@ -31,23 +31,10 @@ fs.ensureDirSync(publicDir);
 fs.emptyDirSync(publicDir);
 fs.ensureDirSync(publicPostsDir);
 
-// Add Handlebar helper to "include" partials
-Handlebars.registerHelper('include', function (partialPath, options) {
-    const filePath = path.resolve(templateDir, partialPath);
-    try {
-        const content = fs.readFileSync(filePath, 'utf8');
-        return new Handlebars.SafeString(content);
-    } catch (err) {
-        console.error(`Error including partial: ${partialPath}`);
-        return '';
-    }
-});
-
 // Register Handlebars partials
-const headerTemplate = fs.readFileSync(path.join(templateDir, 'header.html'), 'utf-8');
-const footerTemplate = fs.readFileSync(path.join(templateDir, 'footer.html'), 'utf-8');
-Handlebars.registerPartial('header', headerTemplate);
-Handlebars.registerPartial('footer', footerTemplate);
+Handlebars.registerPartial('header', fs.readFileSync(path.join(templateDir, 'header.html'), 'utf-8'));
+Handlebars.registerPartial('footer', fs.readFileSync(path.join(templateDir, 'footer.html'), 'utf-8'));
+Handlebars.registerPartial('feature/highlight', fs.readFileSync(path.join(templateDir, 'feature/highlight.html'), 'utf-8'));
 
 // Compile templates
 const postTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'post.html'), 'utf-8'));
@@ -89,11 +76,12 @@ fs.readdirSync(pagesDir).forEach(file => {
             navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
             siteName: siteConfig.name, // Pass site name
-            pageDescription : frontMatter.description || siteConfig.description, 
+            pageDescription: frontMatter.description || siteConfig.description,
             author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
             pageDesciption: frontMatter.content || '', // Use description from front matter
             title: frontMatter.title || slug.replace(/-/g, ' '), // Use title from front matter or generate from slug
+            needsHighlightJS: htmlContent.includes('<pre><code'),
             content: htmlContent
         };
 
@@ -131,13 +119,14 @@ fs.readdirSync(postsDir).forEach(file => {
         const postData = {
             navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
-            pageDescription : frontMatter.description || siteConfig.description, 
+            pageDescription: frontMatter.description || siteConfig.description,
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
             siteName: siteConfig.name, // Pass site name
             author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
             ...frontMatter, // Include front matter data (like title)
             date: date,
             content: htmlContent,
+            needsHighlightJS: htmlContent.includes('<pre><code'),
             path: `${siteConfig.basePath}/posts/${slug}.html` // Path for linking in the list
         };
 
@@ -165,7 +154,7 @@ const indexHtml = listTemplate({
     basePath: siteConfig.basePath,
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
-    pageDescription : siteConfig.description, 
+    pageDescription: siteConfig.description,
     author: siteConfig.author,
     title: 'All Posts',
     items: postsData
@@ -178,7 +167,7 @@ const e404Html = e404Template({
     basePath: siteConfig.basePath,
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
-    pageDescription : siteConfig.description, 
+    pageDescription: siteConfig.description,
     author: siteConfig.author,
     title: 'All Posts',
     items: postsData

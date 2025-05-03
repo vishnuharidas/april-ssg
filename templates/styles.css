@@ -58,7 +58,10 @@ img {
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5,
+h6 {
     line-height: 1.3;
     color: var(--headings-color);
 }
@@ -114,8 +117,23 @@ nav a {
     color: var(--link-color);
 }
 
-article>h2 {
-    font-size: 1.9em;
+article h1 {
+    font-size: 2em;
+}
+
+article h2 {
+    font-size: 1.6em;
+}
+
+article h3 {
+    font-size: 1.4em;
+}
+
+article h4,
+article h5,
+article h6 {
+    font-size: 1.2em; 
+    font-weight: bold;
 }
 
 article>date {
@@ -202,18 +220,6 @@ main-list-date {
 @media (max-width: 480px) {
     body {
         font-size: var(--responsive-font-size-sm);
-    }
-
-    h1 {
-        font-size: 1.8em;
-    }
-
-    h2 {
-        font-size: 1.5em;
-    }
-
-    h3 {
-        font-size: 1.2em;
     }
 
     .main-list>li {

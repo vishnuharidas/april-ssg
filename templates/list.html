@@ -1,8 +1,8 @@
 {{> header }}
 <h2>{{ title }}</h2>
-<ul>
+<ul class="main-list">
     {{#each items}}
-    <li><april-ssg-mono>{{ this.date }}</april-ssg-mono> — <a href="{{ this.path }}">{{ this.title }}</a></li>
+    <li><main-list-date>{{ this.date }}</main-list-date> — <a href="{{ this.path }}">{{ this.title }}</a></li>
     {{/each}}
 </ul>
 {{> footer }}

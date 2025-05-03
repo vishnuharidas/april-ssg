@@ -164,8 +164,24 @@ april-ssg-notfound {
     font-size: medium;
 }
 
-april-ssg-mono {
+.main-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-list>li {
+    display: flex;
+    align-items: baseline;
+}
+
+main-list-date {
+    color: var(--text-color);
     font-family: monospace;
+}
+
+.main-list li a {
+    flex: 1;
 }
 
 @media (max-width: 768px) {
@@ -200,14 +216,8 @@ april-ssg-mono {
         font-size: 1.2em;
     }
 
-    main>ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    main>ul>li {
-        border-bottom: 1px dotted #ccc;
-        padding: 6px 5px;
+    .main-list>li {
+        padding: 6px 0px;
     }
 }
 

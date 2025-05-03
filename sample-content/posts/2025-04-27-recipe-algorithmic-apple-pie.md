@@ -3,9 +3,7 @@ title: "Recipe: Algorithmic Apple Pie"
 description: "Learn how to bake a perfect apple pie with this algorithmic recipe that combines culinary art and computational precision."
 ---
 
-# Algorithmic Apple Pie v1.0
-
-A computationally delicious dessert.
+Algorithmic Apple Pie — a computationally delicious dessert.
 
 !["Apple Pie and Raspberry Pie"](/images/pexels-asya-vlasova-228168-3065590.jpg)
 _Image: "Apple Pie and Raspberry Pie" - free to use photo by Asya Vlasova from Pexels.com_

@@ -165,6 +165,8 @@ pre code {
     display: block;
     overflow-x: scroll;
     padding: 1rem;
+    white-space: pre;
+    word-break: normal;
 }
 
 code {
@@ -172,6 +174,8 @@ code {
     padding: 0.1em 0.3em;
     font-size: 0.9em;
     border-radius: 3px;
+    white-space: pre-wrap;   
+    word-break: break-word;
 }
 
 april-ssg-notfound {

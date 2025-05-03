@@ -153,9 +153,7 @@ footer {
 blockquote {
     border-left: 5px solid var(--border-color);
     padding: 10px 20px;
-    margin: 20px 0;
     background-color: var(--code-bg-color);
-    margin-left: 16px;
 }
 
 pre {

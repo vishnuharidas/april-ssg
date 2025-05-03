@@ -208,6 +208,27 @@ main-list-date {
     margin-left: 0.5rem;
 }
 
+table {
+    display: block;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+th,
+td {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    text-align: left;
+}
+
+th {
+    background-color: var(--code-bg-color);
+    font-weight: bold;
+}
+
 @media (prefers-color-scheme: dark) {
     pre code::-webkit-scrollbar {
         width: 8px;

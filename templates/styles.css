@@ -229,6 +229,11 @@ th {
     font-weight: bold;
 }
 
+iframe {
+    border: 0;
+    width: 100% !important;
+}
+
 @media (prefers-color-scheme: dark) {
     pre code::-webkit-scrollbar {
         width: 8px;

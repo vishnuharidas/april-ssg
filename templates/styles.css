@@ -199,10 +199,13 @@ april-ssg-notfound {
 main-list-date {
     color: var(--text-color);
     font-family: monospace;
+    font-size: 0.9em;
+    margin-right: 0.5rem;
 }
 
 .main-list li a {
     flex: 1;
+    margin-left: 0.5rem;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -5,10 +5,10 @@
     "dirs": {
         "templates": "templates",
         "css": "templates/styles.css",
-        "posts": "sample-content/posts",
-        "pages": "sample-content/pages",
-        "extras": "sample-content/extras",
-        "images": "sample-content/images",
+        "posts": "content/posts",
+        "pages": "content/pages",
+        "extras": "content/extras",
+        "images": "content/images",
         "output": "public"
     },
     "menu": [

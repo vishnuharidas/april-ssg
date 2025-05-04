@@ -1,5 +1,7 @@
-# April⋅SSG - a lightweight, simple static site generator
-
+---
+title: About April⋅SSG
+description: A minimalistic static site generator for developers who value simplicity.
+---
 **April⋅SSG** is a lightweight, super-simple static site generator written in JavaScript. It focuses on **minimalism and ease of use**, making it an ideal choice for developers who want to create static websites without unnecessary complexity.
 
 April⋅SSG was born out of my frustration with tools like Jekyll and Hugo. They always seemed to overcomplicate things when all I wanted was a clean, minimalistic site. After countless hours of trial and error, I built a simple static site generator with the help of Copilot. Discover the full story behind [why I built April⋅SSG](https://iamvishnu.com/posts/why-i-built-april-static-site-generator).
@@ -43,18 +45,14 @@ Once your site is built, the entire static website resides in the `/public` dire
 
 You can deploy your website by uploading the contents of the `/public` folder to any static web hosting provider. This can be done manually or integrated into your CI/CD pipeline.
 
-For specific instructions on deploying to popular platforms, see the guides:
-
-- [Publishing on GitHub Pages](docs/github-pages/README.md)
-- [Publishing on GitLab Pages](docs/gitlab-pages/README.md)
-- [Publishing on Cloudflare Pages](docs/cloudflare-pages/README.md)
+For specific instructions on deploying to popular platforms like GitHub Pages, [see the guides](https://github.com/vishnuharidas/april-ssg/tree/main/docs/) included in the original repository.
 
 
 ## 📁 Folder Structure
 
 April⋅SSG uses a simple, minimal folder structure:
 
-```
+```text
 content/
 ├── posts/      → Your blog posts
 ├── pages/      → Standalone pages like about.md
@@ -75,7 +73,7 @@ content/
 
 You can fully customize your site by editing the HTML templates and `styles.css`. All changes will be reflected in the next build.
 
-```
+```text
 templates/
 ├── footer.html     → Footer section for all pages
 ├── header.html     → Header section for all pages
@@ -84,7 +82,6 @@ templates/
 ├── post.html       → Template for blog posts
 └── styles.css      → All your custom styles
 ```
-
 ## 📄 License
 
-MIT License © 2025 [Vishnu Haridas](https://iamvishnu.com). See [LICENSE](LICENSE.txt) for full details.
+MIT License © 2025 [Vishnu Haridas](https://iamvishnu.com). See [LICENSE](LICENSE) for full details.

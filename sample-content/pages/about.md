@@ -93,7 +93,7 @@ content/
 - **`posts/`** — Markdown files named like `2025-04-29-my-post.md` become `/public/posts/my-post.html`. These are listed on the index page.
 - **`pages/`** — Markdown pages (like `about.md`) become standalone pages at `/public/about.html`.
 - **`images/`** — Files in `content/images/` are copied directly to `public/images/`.
-- **`extras/`** — All files and folders in `extras/` are copied as-is into `public/`. Avoid naming collisions.
+- **`extras/`** — All files and folders in `extras/` are copied as-is into `public/`. Avoid naming collisions. Here's where you can put files like `robots.txt`.
 
 > **Note:** You can change these folder mappings in `site.config.json`.
 

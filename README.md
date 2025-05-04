@@ -130,6 +130,23 @@ To use this workflow:
 
 ---
 
+## 🛠 Cloudflare Pages Workflow
+
+Deploying your April⋅SSG site to Cloudflare Pages is the fast and easiest way to publish your website. Cloudflare Pages is free with unlimited visitor bandwidth.
+
+To deploy using Cloudflare Pages:
+
+1.  Navigate to your Cloudflare dashboard, go to **Workers & Pages**, and select **Create application**. Choose **Pages** and then **Connect to Git**.
+2.  Select the Git repository (GitHub or GitLab) where your April⋅SSG project resides.
+3.  In the **Set up builds and deployments** section, configure the following:
+    *   **Build command:** `npm run build`
+    *   **Build output directory:** `public`
+4.  Click **Save and Deploy**. Cloudflare will build and deploy your site.
+
+Your April⋅SSG site will be live on the provided Cloudflare Pages URL (eg., [https://april-ssg.pages.dev/](https://april-ssg.pages.dev/)) shortly after the deployment completes.
+
+---
+
 ## 🎨 Customizing the Look and Feel
 
 ```

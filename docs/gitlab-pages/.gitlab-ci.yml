@@ -5,7 +5,7 @@ pages:
   stage: deploy
   script:
     - npm install
-    - npm run build
+    - npm run build # or `node build your-site.config.js`
 
   artifacts:
     paths:

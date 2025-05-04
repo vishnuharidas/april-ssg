@@ -1,15 +1,13 @@
-name: Deploy April⋅SSG Demo to GitHub Pages
+name: Deploy April⋅SSG Website to GitHub Pages
 
 # This workflow builds and deploys the April⋅SSG sample site to GitHub Pages on the original April⋅SSG repository.
 #
 # To use in your own repo:
-# 1. Copy this file to `.github/workflows/deploy.yml`
-# 2. Set `CONFIG_FILE` to your config file (e.g., site.config.json)
-# 3. Set `BASE_PATH` to your GitHub Pages path (e.g., /my-blog or "")
-# 4. Remove or comment the `if:` condition below (it limits deployment to this repo only)
+# 1. Copy this file to `/.github/workflows/deploy.yml`
+# 2. Set `BASE_PATH` to your GitHub Pages path (e.g., /my-blog or "")
 
 env:
-  CONFIG_FILE: sample-site.config.json
+  CONFIG_FILE: site.config.json
 
   BASE_PATH: /april-ssg
   # - Use "/repo-name" if deploying to https://username.github.io/repo-name
@@ -26,12 +24,9 @@ permissions:
 
 jobs:
   build-deploy:
-
-    # 🚫 Comment this out if you're using this workflow in your own repo
-    if: github.repository == 'vishnuharidas/april-ssg' 
-
+    
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

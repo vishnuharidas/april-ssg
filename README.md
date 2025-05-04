@@ -97,53 +97,17 @@ content/
 
 ---
 
-## 📤 Output Directory
+## 🚀 Publishing Your Website
 
-All generated HTML, assets, and copied files are placed in the `/public/` directory. You can deploy this to any static hosting platform (e.g., GitHub Pages, Firebase, Amazon S3, etc.).
+Once your site is built, the entire static website resides in the `/public` directory.
 
----
+You can deploy your website by uploading the contents of the `/public` folder to any static web hosting provider. This can be done manually or integrated into your CI/CD pipeline.
 
-## 🛠 GitHub Pages Workflow
+For specific instructions on deploying to popular platforms, see our guides:
 
-This repository includes a GitHub Actions workflow (`.github/workflows/sample-deploy.yml`) that builds and deploys the sample site to GitHub Pages.
-
-> **Note for cloners/forkers:**  
-> The workflow is **guarded** to run only in the original repo (`vishnuharidas/april-ssg`). To use April⋅SSG with GitHub Pages in your own repo:
->
-> 1. Copy the workflow file to your repo (e.g., `.github/workflows/deploy.yml`)
-> 2. Remove or modify the repository guard condition
-> 3. Update the `BASE_PATH` and config file name in the workflow as needed
-
----
-
-## 🛠 GitLab Pages Workflow
-
-Deploying to GitLab Pages is straightforward with the included `.gitlab-ci.yml` file. This configuration automates the build and deployment process. By default, GitLab Pages are published from the root directory, so no additional base path configuration is required.
-
-To use this workflow:
-
-1. Ensure your repository contains the `.gitlab-ci.yml` file
-2. Push your changes to the `main` branch
-3. GitLab will automatically build and deploy your site to GitLab Pages
-
-> **Note:** You can customize the `.gitlab-ci.yml` file to suit your specific requirements, such as changing the build directory or adding additional steps.
-
----
-
-## 🛠 Cloudflare Pages Workflow
-
-Deploying your April⋅SSG site to Cloudflare Pages is the fast and easiest way to publish your website. Cloudflare Pages is free with unlimited visitor bandwidth.
-
-To deploy using Cloudflare Pages:
-
-1.  Navigate to your Cloudflare dashboard, go to **Workers & Pages**, and select **Create application**. Choose **Pages** and then **Connect to Git**.
-2.  Select the Git repository (GitHub or GitLab) where your April⋅SSG project resides.
-3.  In the **Set up builds and deployments** section, configure the following:
-    *   **Build command:** `npm run build`
-    *   **Build output directory:** `public`
-4.  Click **Save and Deploy**. Cloudflare will build and deploy your site.
-
-Your April⋅SSG site will be live on the provided Cloudflare Pages URL (eg., [https://april-ssg.pages.dev/](https://april-ssg.pages.dev/)) shortly after the deployment completes.
+- [Publishing on GitHub Pages](docs/github-pages/README.md)
+- [Publishing on GitLab Pages](docs/gitlab-pages/README.md)
+- [Publishing on Cloudflare Pages](docs/cloudflare-pages/README.md)
 
 ---
 

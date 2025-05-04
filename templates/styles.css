@@ -142,6 +142,11 @@ article>date {
     color: var(--footer-text-color);
 }
 
+article a {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
 footer {
     margin-top: 3rem;
     border-top: 1px solid var(--border-color);

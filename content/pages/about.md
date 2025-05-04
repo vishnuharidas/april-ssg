@@ -84,4 +84,4 @@ templates/
 ```
 ## 📄 License
 
-MIT License © 2025 [Vishnu Haridas](https://iamvishnu.com). See [LICENSE](LICENSE) for full details.
+MIT License © 2025 [Vishnu Haridas](https://iamvishnu.com). See [LICENSE](license) for full details.

@@ -2,7 +2,7 @@
 
 You can deploy your website by uploading the contents of the `/public` folder to any static web hosting provider. This can be done manually or integrated into your CI/CD pipeline.
 
-For specific instructions on deploying to popular platforms, see our guides:
+For specific instructions on deploying to popular platforms, see the guides:
 
 - [Publishing on GitHub Pages](github-pages/README.md)
 - [Publishing on GitLab Pages](gitlab-pages/README.md)

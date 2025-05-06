@@ -41,6 +41,7 @@ const postTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, '
 const listTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'list.html'), 'utf-8'));
 const e404Template = Handlebars.compile(fs.readFileSync(path.join(templateDir, '404.html'), 'utf-8'));
 const pageTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'page.html'), 'utf-8'));
+const rssTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'rss.xml'), 'utf-8'));
 
 const postsData = [];
 
@@ -140,7 +141,10 @@ fs.readdirSync(postsDir).forEach(file => {
         postsData.push({
             title: frontMatter.title || slug.replace(/-/g, ' '), // Use title from front matter or generate from slug
             date: date,
-            path: `${siteConfig.basePath}/posts/${slug}`
+            path: `${siteConfig.basePath}/posts/${slug}`,
+            fullDate: new Date(date + 'T00:00:00Z').toUTCString(),
+            fullUrl: `${siteConfig.siteUrl}${siteConfig.basePath}/posts/${slug}.html`,
+            description: frontMatter.description || siteConfig.description,
         });
     }
 });
@@ -174,7 +178,17 @@ const e404Html = e404Template({
 }); // Pass site name
 fs.writeFileSync(path.join(publicDir, '404.html'), e404Html);
 
-console.log('✅ Processed index page');
+// Generate RSS feed - add latest 10 items if more than 100 posts. Otherwise, add all 100 posts.
+const maxFeedItems = postsData.length > 100 ? 10 : postsData.length;
+const rssXml = rssTemplate({
+    siteTitle: siteConfig.name,
+    siteDescription: siteConfig.description,
+    siteUrl: siteConfig.siteUrl,
+    rssBuildDate: new Date().toUTCString(),
+    items: postsData.slice(0, maxFeedItems)
+}); // Pass site name
+fs.writeFileSync(path.join(publicDir, 'rss.xml'), rssXml);
+console.log(`✅ Generated RSS feed [added latest ${maxFeedItems} items out of ${postsData.length}]`);
 
 // Copy the folder /images to the public directory
 const publicImagesDir = path.join(publicDir, 'images');

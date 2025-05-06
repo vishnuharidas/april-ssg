@@ -1,0 +1,18 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>{{siteTitle}}</title>
+        <link>{{siteUrl}}</link>
+        <description>{{siteDescription}}</description>
+        <lastBuildDate>{{rssBuildDate}}</lastBuildDate>
+        <atom:link href="{{siteUrl}}/rss.xml" rel="self" type="application/rss+xml" />
+        {{#each items}}
+        <item>
+            <title>{{this.title}}</title>
+            <link>{{this.fullUrl}}</link>
+            <description><![CDATA[{{this.description}}]]></description>
+            <pubDate>{{this.fullDate}}</pubDate>
+            <guid isPermaLink="true">{{this.fullUrl}}</guid>
+        </item>
+        {{/each}}
+    </channel>
+</rss>

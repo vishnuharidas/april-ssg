@@ -21,5 +21,6 @@
             "path": "/about"
         }
     ],
-    "basePath": ""
+    "basePath": "",
+    "siteUrl": "https://april-ssg.iamvishnu.com"
 }

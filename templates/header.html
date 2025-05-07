@@ -12,7 +12,7 @@
     <meta property="og:description" content="{{ pageDescription }}">
     <meta property="og:image" content="{{ ogImage }}">
     <link rel="alternate" type="application/rss+xml" href="{{ basePath }}/rss.xml">
-    <link id="theme-css" rel="stylesheet" href="{{basePath}}/css/{{ cssFile }}">
+    <style>{{{ minifiedCSS }}}</style>
     {{#if needsHighlightJS}}
     {{> feature/highlight }}
     {{/if}}

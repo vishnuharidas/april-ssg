@@ -3,6 +3,7 @@ const path = require('path');
 const marked = require('marked');
 const Handlebars = require('handlebars');
 const matter = require('gray-matter');
+const CleanCSS = require('clean-css');
 
 // Run as `$ npm run build -- content-folder-name` for a specific folder. Defaults to "content" not specified.
 const contentDir = path.resolve(__dirname, process.argv[2] || "content");
@@ -69,7 +70,9 @@ const navItems = siteConfig.menu.map(item => {
 
 const defaultOgImage = `${siteConfig.siteUrl}${siteConfig.basePath}/${siteConfig.ogImage}`;
 
-const cssFilename = path.basename(cssFile);
+// Minify and include CSS in the HTML
+const cssContent = fs.readFileSync(cssFile, 'utf-8');
+const minifiedCss = new CleanCSS().minify(cssContent).styles;
 
 // Read and process markdown files from pages directory
 fs.readdirSync(pagesDir).forEach(file => {
@@ -102,7 +105,7 @@ fs.readdirSync(pagesDir).forEach(file => {
             navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
             siteName: siteConfig.name, // Pass site name
-            cssFile: cssFilename, // Pass CSS filename
+            minifiedCSS: minifiedCss, // Pass minified CSS
             pageDescription: frontMatter.description || siteConfig.description,
             ogImage: ogImage,
             author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
@@ -161,7 +164,7 @@ fs.readdirSync(postsDir).forEach(file => {
         const postData = {
             navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
-            cssFile: cssFilename, // Pass CSS filename
+            minifiedCSS: minifiedCss, // Pass minified CSS
             pageDescription: frontMatter.description || siteConfig.description,
             ogImage: ogImage,
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
@@ -199,7 +202,7 @@ postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
 const indexHtml = listTemplate({
     navItems: navItems,
     basePath: siteConfig.basePath,
-    cssFile: cssFilename, 
+    minifiedCSS: minifiedCss,
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
     pageDescription: siteConfig.description,
@@ -214,7 +217,7 @@ fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
 const e404Html = e404Template({
     navItems: navItems,
     basePath: siteConfig.basePath,
-    cssFile: cssFilename, 
+    minifiedCSS: minifiedCss,
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
     pageDescription: siteConfig.description,
@@ -242,12 +245,6 @@ const publicImagesDir = path.join(publicDir, 'images');
 fs.ensureDirSync(publicImagesDir);
 fs.copySync(imagesDir, publicImagesDir, { overwrite: true });
 console.log('✅ Copied images to public directory');
-
-// Copy the single CSS file specified in the config to the public/css directory
-const publicCssDir = path.join(publicDir, 'css');
-fs.ensureDirSync(publicCssDir);
-fs.copySync(cssFile, path.join(publicCssDir, path.basename(cssFile)), { overwrite: true });
-console.log('✅ Copied CSS to public directory');
 
 // Copy the contents of /extras to the public directory
 fs.copySync(extrasDir, publicDir, { overwrite: true });

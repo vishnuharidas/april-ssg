@@ -2,7 +2,7 @@
 <h2>{{ title }}</h2>
 <ul class="main-list">
     {{#each items}}
-    <li><main-list-date>{{ this.date }}</main-list-date> — <a href="{{ this.path }}">{{ this.title }}</a></li>
+    <li><span class="main-list-date">{{ this.date }}</span> — <a href="{{ this.path }}">{{ this.title }}</a></li>
     {{/each}}
 </ul>
 {{> footer }}

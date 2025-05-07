@@ -17,11 +17,20 @@ April⋅SSG provides a default CSS file in the `/template` folder for basic webs
         text-decoration:underline;
     }
 </style>
-<span class="april-ssg-theme-demo-span" onClick="javascrip:document.getElementById('theme-css').href='/css-showcase/styles-red.css';">Red</span>
-<span class="april-ssg-theme-demo-span" onClick="javascrip:document.getElementById('theme-css').href='/css-showcase/styles-green.css';">Green</span>
-<span class="april-ssg-theme-demo-span" onClick="javascrip:document.getElementById('theme-css').href='/css-showcase/styles-blue.css';">Blue</span>
-<span class="april-ssg-theme-demo-span" onClick="javascrip:document.getElementById('theme-css').href='/css-showcase/styles-pink.css';">Pink</span>
-<span class="april-ssg-theme-demo-span" onClick="javascrip:document.getElementById('theme-css').href='/css/styles.css';">Default</span>
+<script>
+function loadExternalCSS(href) {
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = href;
+  link.id = "dynamic-style"; // Optional: for later reference or removal
+  document.head.appendChild(link);
+}
+</script>
+<span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-red.css');">Red</span>
+<span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-green.css');">Green</span>
+<span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-blue.css');">Blue</span>
+<span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-pink.css');">Pink</span>
+<span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-default.css');">Default</span>
 </div>
 
 To apply your own styles, copy the default CSS file, modify it as needed, and update your `site.config.json` file to reference your custom stylesheet.

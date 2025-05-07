@@ -13,7 +13,11 @@
     },
     "menu": [
         {
-            "title": "GitHub Repo",
+            "title": "🎨🖌️",
+            "path": "/styles"
+        },
+        {
+            "title": "GitHub↗",
             "path": "https://github.com/vishnuharidas/april-ssg"
         },
         {

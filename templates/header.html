@@ -11,7 +11,7 @@
     <meta property="og:title" content="{{ pageTitle }}">
     <meta property="og:description" content="{{ pageDescription }}">
     <link rel="alternate" type="application/rss+xml" href="{{ basePath }}/rss.xml">
-    <link rel="stylesheet" href="{{ basePath }}/css/styles.css">
+    <link id="theme-css" rel="stylesheet" href="{{basePath}}/css/{{ cssFile }}">
     {{#if needsHighlightJS}}
     {{> feature/highlight }}
     {{/if}}

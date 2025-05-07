@@ -67,6 +67,8 @@ const navItems = siteConfig.menu.map(item => {
     };
 })
 
+const cssFilename = path.basename(cssFile);
+
 // Read and process markdown files from pages directory
 fs.readdirSync(pagesDir).forEach(file => {
 
@@ -84,6 +86,7 @@ fs.readdirSync(pagesDir).forEach(file => {
             navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
             siteName: siteConfig.name, // Pass site name
+            cssFile: cssFilename, // Pass CSS filename
             pageDescription: frontMatter.description || siteConfig.description,
             author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
@@ -127,6 +130,7 @@ fs.readdirSync(postsDir).forEach(file => {
         const postData = {
             navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
+            cssFile: cssFilename, // Pass CSS filename
             pageDescription: frontMatter.description || siteConfig.description,
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
             siteName: siteConfig.name, // Pass site name
@@ -163,6 +167,7 @@ postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
 const indexHtml = listTemplate({
     navItems: navItems,
     basePath: siteConfig.basePath,
+    cssFile: cssFilename, 
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
     pageDescription: siteConfig.description,
@@ -176,6 +181,7 @@ fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
 const e404Html = e404Template({
     navItems: navItems,
     basePath: siteConfig.basePath,
+    cssFile: cssFilename, 
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
     pageDescription: siteConfig.description,

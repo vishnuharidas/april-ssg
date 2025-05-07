@@ -4,26 +4,33 @@ const marked = require('marked');
 const Handlebars = require('handlebars');
 const matter = require('gray-matter');
 
-// Get the config path from CLI or default to site.config.json in the current directory
-// This allows using AprilSSG as a Git submodule.
-const configPath = process.argv[2] || './site.config.json';
-const configFullPath = path.resolve(process.cwd(), configPath);
+// Run as `$ npm run build -- content-folder-name` for a specific folder. Defaults to "content" not specified.
+const contentDir = path.resolve(__dirname, process.argv[2] || "content");
+console.log(`Building site from content folder: ${contentDir}`);
+
+const configFullPath = path.join(contentDir, 'site.config.json');
+
+// Exit if the config file does not exist
+if (!fs.existsSync(configFullPath)) {
+    console.error(`‼️ Error: Config file not found at ${configFullPath}`);
+    process.exit(1);
+}
 
 // Read site configuration
 const siteConfig = JSON.parse(fs.readFileSync(configFullPath, 'utf8'));
 
 // Use paths from config
-const postsDir = path.join(__dirname, siteConfig.dirs.posts);
-const pagesDir = path.join(__dirname, siteConfig.dirs.pages);
-const imagesDir = path.join(__dirname, siteConfig.dirs.images);
-const extrasDir = path.join(__dirname, siteConfig.dirs.extras);
+const postsDir = path.join(contentDir, siteConfig.dirs.posts);
+const pagesDir = path.join(contentDir, siteConfig.dirs.pages);
+const imagesDir = path.join(contentDir, siteConfig.dirs.images);
+const extrasDir = path.join(contentDir, siteConfig.dirs.extras);
 
 // Templates and CSS
-const templateDir = path.join(__dirname, siteConfig.dirs.templates);
-const cssFile = path.join(__dirname, siteConfig.dirs.css);
+const templateDir = path.join(contentDir, siteConfig.dirs.templates);
+const cssFile = path.join(contentDir, siteConfig.dirs.css);
 
 // Output Directories
-const publicDir = path.join(__dirname, siteConfig.dirs.output);
+const publicDir = path.join(contentDir, siteConfig.dirs.output);
 const publicPostsDir = path.join(publicDir, 'posts');
 
 // Ensure public directories exist and are clean

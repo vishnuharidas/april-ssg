@@ -4,10 +4,8 @@
   "description": "A simple, lightweight static site generator",
   "main": "index.js",
   "scripts": {
-    "build": "node build.js site.config.json",
-    "serve": "http-server public -p 8080",
-    "dev": "concurrently \"nodemon --watch content --watch templates --ext html,md,css --exec \\\"npm run build\\\"\" \"http-server public -p 8080 -c-1\"",
-    "clean": "rm -rf public"
+    "build": "node build.js",
+    "dev": "node dev.js"
   },
   "keywords": [],
   "author": "",

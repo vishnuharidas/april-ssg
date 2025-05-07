@@ -3,13 +3,13 @@
     "description": "A sample site to demonstrate the usage of April⋅SSG",
     "author": "Vishnu Haridas",
     "dirs": {
-        "templates": "templates",
-        "css": "templates/styles.css",
-        "posts": "content/posts",
-        "pages": "content/pages",
-        "extras": "content/extras",
-        "images": "content/images",
-        "output": "public"
+        "templates": "../templates",
+        "css": "../templates/styles.css",
+        "posts": "posts",
+        "pages": "pages",
+        "extras": "extras",
+        "images": "images",
+        "output": "../public"
     },
     "menu": [
         {

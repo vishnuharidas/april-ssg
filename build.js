@@ -67,6 +67,8 @@ const navItems = siteConfig.menu.map(item => {
     };
 })
 
+const defaultOgImage = `${siteConfig.siteUrl}${siteConfig.basePath}/${siteConfig.ogImage}`;
+
 const cssFilename = path.basename(cssFile);
 
 // Read and process markdown files from pages directory
@@ -82,12 +84,27 @@ fs.readdirSync(pagesDir).forEach(file => {
         const htmlContent = marked.parse(markdownContent);
         const slug = path.basename(file, path.extname(file)); // e.g., 'about' from 'about.md'
 
+        let ogImage = defaultOgImage;
+
+        // If front matter has an image, use it. Otherwise, use the first image in the content. Otherwise, use the default image.
+        if (frontMatter.image) {
+            ogImage = `${siteConfig.siteUrl}${siteConfig.basePath}${frontMatter.image}`;
+        } else if (htmlContent.includes('<img')) {
+            const imgMatch = htmlContent.match(/<img[^>]+src="([^">]+)"/);
+            if (imgMatch && imgMatch[1]) {
+                ogImage = imgMatch[1].startsWith('/') // Use images from this website only
+                    ? `${siteConfig.siteUrl}${siteConfig.basePath}${imgMatch[1]}`
+                    : defaultOgImage;
+            }
+        }
+
         const pageData = {
             navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
             siteName: siteConfig.name, // Pass site name
             cssFile: cssFilename, // Pass CSS filename
             pageDescription: frontMatter.description || siteConfig.description,
+            ogImage: ogImage,
             author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
             pageDesciption: frontMatter.content || '', // Use description from front matter
@@ -126,12 +143,27 @@ fs.readdirSync(postsDir).forEach(file => {
 
         console.log(frontMatter.description);
 
+        let ogImage = defaultOgImage;
+
+        // If front matter has an image, use it. Otherwise, use the first image in the content. Otherwise, use the default image.
+        if (frontMatter.image) {
+            ogImage = `${siteConfig.siteUrl}${siteConfig.basePath}${frontMatter.image}`;
+        } else if (htmlContent.includes('<img')) {
+            const imgMatch = htmlContent.match(/<img[^>]+src="([^">]+)"/);
+            if (imgMatch && imgMatch[1]) {
+                ogImage = imgMatch[1].startsWith('/') // Use images from this website only
+                    ? `${siteConfig.siteUrl}${siteConfig.basePath}${imgMatch[1]}`
+                    : defaultOgImage;
+            }
+        }
+
         // Prepare data for the post template
         const postData = {
             navItems: navItems,
             basePath: siteConfig.basePath, // Pass base path
             cssFile: cssFilename, // Pass CSS filename
             pageDescription: frontMatter.description || siteConfig.description,
+            ogImage: ogImage,
             pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
             siteName: siteConfig.name, // Pass site name
             author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
@@ -171,6 +203,7 @@ const indexHtml = listTemplate({
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
     pageDescription: siteConfig.description,
+    ogImage: defaultOgImage,
     author: siteConfig.author,
     title: 'All Posts',
     items: postsData
@@ -185,6 +218,7 @@ const e404Html = e404Template({
     siteName: siteConfig.name,
     pageTitle: siteConfig.name,
     pageDescription: siteConfig.description,
+    ogImage: defaultOgImage,
     author: siteConfig.author,
     title: 'All Posts',
     items: postsData

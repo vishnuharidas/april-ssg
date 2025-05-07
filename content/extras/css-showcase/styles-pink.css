@@ -137,11 +137,6 @@ article h6 {
     font-weight: bold;
 }
 
-article>date {
-    font-size: 1rem;
-    color: var(--footer-text-color);
-}
-
 article a {
     word-break: break-word;
     overflow-wrap: anywhere;
@@ -183,7 +178,7 @@ code {
     word-break: break-word;
 }
 
-april-ssg-notfound {
+.april-ssg-notfound {
     display: block;
     color: var(--not-found-text-color);
     padding: 1rem;
@@ -205,7 +200,7 @@ april-ssg-notfound {
     padding-bottom: 0.5rem;
 }
 
-main-list-date {
+.main-list-date {
     color: var(--text-color);
     font-family: monospace;
     font-size: 0.9em;

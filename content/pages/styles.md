@@ -1,5 +1,5 @@
 ---
-title: "Styling Your April⋅SSG Website"
+title: "Example CSS Variations Preview"
 ---
 
 April⋅SSG provides a default CSS file in the `/template` folder for basic website styling. This sample page demonstrates several themes, each based on the default stylesheet with different color variations. Use the buttons below to preview each theme.
@@ -24,7 +24,7 @@ April⋅SSG provides a default CSS file in the `/template` folder for basic webs
 <span class="april-ssg-theme-demo-span" onClick="javascrip:document.getElementById('theme-css').href='/css/styles.css';">Default</span>
 </div>
 
-To apply your own styles, copy the default CSS file, modify it as needed, and update the `site.config.json` file to reference your custom stylesheet.
+To apply your own styles, copy the default CSS file, modify it as needed, and update your `site.config.json` file to reference your custom stylesheet.
 
 ---
 

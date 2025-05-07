@@ -57,7 +57,8 @@ content/
 ├── posts/      → Your blog posts
 ├── pages/      → Standalone pages like about.md
 ├── images/     → Images
-└── extras/     → Any other files (PDFs, raw HTML, etc.)
+├── extras/     → Any other files (PDFs, raw HTML, etc.)
+└── site.config.json    → Website configuration
 ```
 
 ### How It Works
@@ -66,12 +67,12 @@ content/
 - **`pages/`** — Markdown pages (like `about.md`) become standalone pages at `/public/about.html`.
 - **`images/`** — Files in `content/images/` are copied directly to `public/images/`.
 - **`extras/`** — All files and folders in `extras/` are copied as-is into `public/`. Avoid naming collisions. Here's where you can put files like `robots.txt`.
+- **`site.config.json`** — Central configuration file for your website. Customize directory names, site title, URLs, and other global settings here.
 
-> **Note:** You can change these folder mappings in `site.config.json`.
 
 ## 🎨 Customizing the Look and Feel
 
-You can fully customize your site by editing the HTML templates and `styles.css`. All changes will be reflected in the next build.
+You can personalize your site's appearance by modifying the HTML templates and `styles.css` in the `templates/` folder. Any updates you make will be applied the next time you build your site. For practical examples, check out the [Example CSS Variations Preview](styles) page.
 
 ```text
 templates/
@@ -80,7 +81,8 @@ templates/
 ├── list.html       → Layout for listing pages (e.g. homepage)
 ├── page.html       → Template for standalone pages
 ├── post.html       → Template for blog posts
-└── styles.css      → All your custom styles
+├── rss.xml         → Template for RSS feed
+└── styles.css      → Styles for the website
 ```
 ## 📄 License
 

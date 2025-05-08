@@ -59,6 +59,17 @@ renderer.image = (href, title, text) => {
     const fixedHref = href.startsWith('/') ? `${siteConfig.basePath}${href}` : href;
     return `<img src="${fixedHref}" alt="${text}" ${title ? `title="${title}"` : ''}>`;
 };
+
+renderer.link = function(href, title, text) {
+  const isExternal = href.startsWith('http') && !href.startsWith(siteConfig.siteUrl);
+
+  const targetAttr = isExternal ? ' target="_blank" rel="noopener"' : '';
+  const suffix = isExternal ? '<sup>↗</sup>' : '';
+  const titleAttr = title ? ` title="${title}"` : '';
+
+  return `<a href="${href}"${titleAttr}${targetAttr}>${text}${suffix}</a>`;
+};
+
 marked.use({ renderer });
 
 const navItems = siteConfig.menu.map(item => {

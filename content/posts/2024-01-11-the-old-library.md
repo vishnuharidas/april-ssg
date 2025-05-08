@@ -23,6 +23,6 @@ The doors creaked open, revealing rows of dusty books. Sunlight filtered through
 
 > Libraries store the dreams of generations.
 
-![Library shelves](https://images.unsplash.com/photo-1464983953574-0892a716854b)
+![Library shelves](https://images.unsplash.com/photo-1464983953574-0892a716854b "5401x3601")
 
 *What story will you discover next?*

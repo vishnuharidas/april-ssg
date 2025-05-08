@@ -82,9 +82,9 @@ Discover more about the [CommonMark specification](https://commonmark.org).
 To show readers the wonders they described, images could be summoned. Similar to links, but with a leading exclamation mark `!`:
 
 ```markdown
-![A mystical forest path](/images/forest-path.jpg "Optional title text")
+![A mystical forest path](/images/forest-path.jpg "Optional title text 1280x1920")
 ```
-*(Note: The actual image path needs to exist for it to display)*
+![A mystical forest path](/images/pexels-danila-popov-85164195-9007626.jpg "Optional title text 1280x1920")
 
 ## Blockquotes: Echoes of the Wise
 

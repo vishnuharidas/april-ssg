@@ -10,6 +10,6 @@ Sarah searched her room for the missing key. The diary on her desk remained lock
 - Last seen on the bookshelf
 - The cat was acting suspicious
 
-![A brass key](https://images.unsplash.com/photo-1519125323398-675f0ddb6308)
+![A brass key](https://images.unsplash.com/photo-1519125323398-675f0ddb6308 "6000x4000")
 
 **To be continued...**

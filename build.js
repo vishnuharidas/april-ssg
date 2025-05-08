@@ -56,8 +56,25 @@ const postsData = [];
 // This is to fix the image links in the markdown files
 const renderer = new marked.Renderer();
 renderer.image = (href, title, text) => {
-    const fixedHref = href.startsWith('/') ? `${siteConfig.basePath}${href}` : href;
-    return `<img src="${fixedHref}" alt="${text}" ${title ? `title="${title}"` : ''}>`;
+  const fixedHref = href.startsWith('/') ? `${siteConfig.basePath}${href}` : href;
+
+  let width = '';
+  let height = '';
+  let titleAttr = '';
+
+  // If title is in the format "400x300" or 'some text 400x300'
+  if (title && /\b\d{2,4}x\d{2,4}\b/.test(title)) {
+    const match = title.match(/(\d{2,4})x(\d{2,4})/);
+    if (match) {
+      width = match[1];
+      height = match[2];
+      titleAttr = title.replace(match[0], '').trim();
+    }
+  } else {
+    titleAttr = title;
+  }
+
+  return `<img src="${fixedHref}" alt="${text}"${titleAttr ? ` title="${titleAttr}"` : ''}${width && height ? ` width="${width}" height="${height}"` : ''}>`;
 };
 
 renderer.link = function(href, title, text) {

@@ -70,7 +70,11 @@ h6 {
 
 a {
     color: var(--link-color);
-    text-decoration: none;
+    text-decoration: underline;
+}
+
+a>sup {
+    font-size: 0.7em;
 }
 
 a:hover {
@@ -115,6 +119,7 @@ nav ul li {
 
 nav a {
     font-weight: normal;
+    text-decoration: none;
     color: var(--link-color);
 }
 
@@ -210,6 +215,12 @@ code {
 .main-list li a {
     flex: 1;
     margin-left: 0.5rem;
+    text-decoration: none;
+}
+.main-list li a:hover {
+    flex: 1;
+    margin-left: 0.5rem;
+    text-decoration: var(--link-hover-decoration);
 }
 
 table {

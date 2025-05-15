@@ -81,7 +81,7 @@ renderer.link = function(href, title, text) {
   const isExternal = href.startsWith('http') && !href.startsWith(siteConfig.siteUrl);
 
   const targetAttr = isExternal ? ' target="_blank" rel="noopener"' : '';
-  const suffix = isExternal ? '<sup>↗</sup>' : '';
+  const suffix = isExternal ? '<svg aria-hidden="true" focusable="false" width="0.6em" height="0.6em" viewBox="0 0 24 24" style="vertical-align:text-top;"><path d="M5 19L19 5M5 5h14v14" stroke="currentColor" fill="none" stroke-width="3"/></svg>' : '';
   const titleAttr = title ? ` title="${title}"` : '';
 
   return `<a href="${href}"${titleAttr}${targetAttr}>${text}${suffix}</a>`;

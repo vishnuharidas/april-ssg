@@ -74,10 +74,6 @@ a {
     text-decoration: underline;
 }
 
-a>sup {
-    font-size: 0.7em;
-}
-
 a:hover {
     text-decoration: var(--link-hover-decoration);
 }

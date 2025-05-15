@@ -89,6 +89,7 @@ header {
 header h1 {
     font-size: x-large;
     font-weight: bold;
+    margin-right: 1rem;
 }
 
 header h1 a {
@@ -108,16 +109,7 @@ nav ul {
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-}
-
-nav ul li {
-    padding: 0.5em 1em;
-}
-
-nav a {
-    font-weight: normal;
-    text-decoration: none;
-    color: var(--link-color);
+    gap: 1rem;
 }
 
 article h1 {
@@ -185,6 +177,7 @@ code {
     color: var(--not-found-text-color);
     padding: 1rem;
     margin-bottom: 1.5rem;
+    margin-top: 1rem;
     background: var(--not-found-bg-color);
     border: 2px solid var(--not-found-border-color);
     font-size: medium;

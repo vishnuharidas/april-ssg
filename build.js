@@ -102,6 +102,8 @@ const defaultOgImage = `${siteConfig.siteUrl}${siteConfig.basePath}/${siteConfig
 const cssContent = fs.readFileSync(cssFile, 'utf-8');
 const minifiedCss = new CleanCSS().minify(cssContent).styles;
 
+console.info('⌛️ Processing pages...');
+
 // Read and process markdown files from pages directory
 fs.readdirSync(pagesDir).forEach(file => {
 
@@ -150,6 +152,8 @@ fs.readdirSync(pagesDir).forEach(file => {
     }
 });
 
+console.info('⌛️ Processing posts...');
+
 // Read and process markdown files from posts directory
 fs.readdirSync(postsDir).forEach(file => {
 
@@ -171,8 +175,6 @@ fs.readdirSync(postsDir).forEach(file => {
 
         // Convert markdown to HTML
         const htmlContent = marked.parse(markdownContent);
-
-        console.log(frontMatter.description);
 
         let ogImage = defaultOgImage;
 
@@ -223,6 +225,8 @@ fs.readdirSync(postsDir).forEach(file => {
     }
 });
 
+console.info('⌛️ Processing index, images, extras, and RSS feed...');
+
 // Sort posts by date (descending)
 postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -240,6 +244,7 @@ const indexHtml = listTemplate({
     items: postsData
 }); // Pass site name
 fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
+console.log(`✅ Generated index.html`);
 
 // Generate 404 page (list of posts)
 const e404Html = e404Template({
@@ -255,6 +260,7 @@ const e404Html = e404Template({
     items: postsData
 }); // Pass site name
 fs.writeFileSync(path.join(publicDir, '404.html'), e404Html);
+console.log(`✅ Generated 404.html`);
 
 // Generate RSS feed - add latest 10 items if more than 100 posts. Otherwise, add all 100 posts.
 const maxFeedItems = postsData.length > 100 ? 10 : postsData.length;
@@ -279,5 +285,5 @@ fs.copySync(extrasDir, publicDir, { overwrite: true });
 console.log('✅ Copied extras to public directory');
 
 console.info('-----------------------------------------------------------------------------')
-console.info('✅ SUCCESS: Build completed. Run `npm run dev[-sample]` to start the server.');
+console.info('✅ SUCCESS: Build completed. Run `npm run dev` to start the server.');
 console.info('-----------------------------------------------------------------------------')

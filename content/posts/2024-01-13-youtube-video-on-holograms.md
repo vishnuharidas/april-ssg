@@ -1,6 +1,9 @@
 ---
 title: "YoutTube Video: Understanding Holograms with 3Blue1Brown"
 description: "A brief look at holograms with the help of an excellent video by 3Blue1Brown ."
+tags:
+  - science
+  - education
 ---
 
 Holograms are fascinating optical phenomena that allow for the creation of three-dimensional images. Unlike traditional photographs, holograms capture the light field itself, recording both intensity and phase information.

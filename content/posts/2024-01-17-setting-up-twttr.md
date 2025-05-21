@@ -1,6 +1,9 @@
 ---
 title: "From 'twttr' to X: The Journey of a Microblogging Giant"
 description: "Tracing the evolution of Twitter from its humble beginnings to its current state as X."
+tags:
+  - history
+  - technology
 ---
 
 ## The Genesis of an Idea

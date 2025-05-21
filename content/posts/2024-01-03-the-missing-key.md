@@ -1,6 +1,10 @@
 ---
 title: "The Missing Key"
 description: "A mystery short story about a lost key and a locked diary."
+tags:
+  - mystery
+  - story
+  - fiction
 ---
 
 Sarah searched her room for the missing key. The diary on her desk remained locked, its secrets safe for another day.

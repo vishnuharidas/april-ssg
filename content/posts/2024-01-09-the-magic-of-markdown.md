@@ -1,6 +1,12 @@
 ---
 title: "The Magic of Markdown: A Writer's Tale"
 description: "Embark on a journey through the enchanting world of Markdown syntax."
+tags:
+  - markdown
+  - writing
+  - guide
+  - tutorial
+  - productivity
 ---
 
 # Chapter 1: The Quest Begins

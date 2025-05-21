@@ -2,7 +2,7 @@
 <div class="april-ssg-notfound">That's a 404. You might be interested in reading some of these articles:</div>
 <ul class="main-list">
     {{#each items}}
-    <li><span class="main-list-date">{{ this.date }}</span> — <a href="{{ this.path }}">{{ this.title }}</a></li>
+    <li><time datetime="{{this.date}}">{{ this.date }}</time> <a href="{{ this.path }}">{{ this.title }}</a></li>
     {{/each}}
 </ul>
 {{> footer }}

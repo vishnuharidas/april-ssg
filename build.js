@@ -47,6 +47,7 @@ Handlebars.registerPartial('feature/highlight', fs.readFileSync(path.join(templa
 // Compile templates
 const postTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'post.html'), 'utf-8'));
 const listTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'list.html'), 'utf-8'));
+const tagsListTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'tags.html'), 'utf-8'));
 const e404Template = Handlebars.compile(fs.readFileSync(path.join(templateDir, '404.html'), 'utf-8'));
 const pageTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'page.html'), 'utf-8'));
 const rssTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'rss.xml'), 'utf-8'));
@@ -310,7 +311,7 @@ console.log(`✅ Generated RSS feed [added latest ${maxFeedItems} items out of $
 
 console.info('⌛️ Processing tag pages...');
 // Create the main tag directory
-const publicTagDir = path.join(publicDir, 'tag');
+const publicTagDir = path.join(publicDir, 'tags');
 fs.ensureDirSync(publicTagDir);
 
 // Generate pages for each tag
@@ -335,6 +336,34 @@ for (const tag in allTags) {
     fs.writeFileSync(path.join(specificTagDir, 'index.html'), tagPageHtml);
     console.log(`✅ Generated tag page: ${tag}`);
 }
+
+// Generate tag index page (list of tags)
+const tagIndexList = [];
+for (const tag in allTags) {
+    tagIndexList.push({
+        title: tag,
+        count: allTags[tag].length,
+    });
+}
+
+// Sort tags by count (descending)
+tagIndexList.sort((a, b) => b.count - a.count);
+
+const tagIndexTempalte = {
+    navItems: navItems,
+    basePath: siteConfig.basePath,
+    minifiedCSS: minifiedCss,
+    siteName: siteConfig.name,
+    pageTitle: `Tags — ${siteConfig.name}`,
+    pageDescription: `Explore tags on ${siteConfig.name}`,
+    ogImage: defaultOgImage,
+    author: siteConfig.author,
+    title: `All Tags`,
+    tags: tagIndexList
+};
+const tagIndexHtml = tagsListTemplate(tagIndexTempalte);
+fs.writeFileSync(path.join(publicTagDir, 'index.html'), tagIndexHtml);
+console.log(`✅ Generated tag index page: tags/index.html`);
 
 // Copy the folder /images to the public directory
 const publicImagesDir = path.join(publicDir, 'images');

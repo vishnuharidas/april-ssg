@@ -240,8 +240,12 @@ iframe {
     width: 100% !important;
 }
 
-.post-tags{
+.post-tags {
     margin-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5em;
 }
 
 @media(max-width: 600px) {

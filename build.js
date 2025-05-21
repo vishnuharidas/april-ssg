@@ -154,6 +154,8 @@ fs.readdirSync(pagesDir).forEach(file => {
 
 console.info('⌛️ Processing posts...');
 
+const allTags = {}; // Initialize allTags object
+
 // Read and process markdown files from posts directory
 fs.readdirSync(postsDir).forEach(file => {
 
@@ -163,6 +165,16 @@ fs.readdirSync(postsDir).forEach(file => {
     if (stat.isFile() && (path.extname(file) === '.md' || path.extname(file) === '.markdown')) {
         const fileContent = fs.readFileSync(filePath, 'utf-8');
         const { data: frontMatter, content: markdownContent } = matter(fileContent);
+
+        // Extract tags from frontmatter, ensuring it's an array
+        let tags = [];
+        if (frontMatter.tags && Array.isArray(frontMatter.tags)) {
+            tags = frontMatter.tags;
+        } else if (frontMatter.tags) {
+            // If tags is a string, split it by comma and trim whitespace
+            tags = frontMatter.tags.split(',').map(tag => tag.trim());
+        }
+
 
         // Extract date and slug from filename (YYYY-MM-DD-slug.md)
         const filenameMatch = file.match(/^(\d{4}-\d{2}-\d{2})-(.*)\.(md|markdown)$/);
@@ -204,7 +216,8 @@ fs.readdirSync(postsDir).forEach(file => {
             date: date,
             content: htmlContent,
             needsHighlightJS: htmlContent.includes('<pre><code'),
-            path: `${siteConfig.basePath}/posts/${slug}.html` // Path for linking in the list
+            path: `${siteConfig.basePath}/posts/${slug}.html`, // Path for linking in the list
+            tags: tags // Add tags to postData
         };
 
         // Generate individual post HTML
@@ -221,9 +234,30 @@ fs.readdirSync(postsDir).forEach(file => {
             fullDate: new Date(date + 'T00:00:00Z').toUTCString(),
             fullUrl: `${siteConfig.siteUrl}${siteConfig.basePath}/posts/${slug}.html`,
             description: frontMatter.description || siteConfig.description,
+            tags: tags // Add tags to postsData items
+        });
+
+        // Populate allTags
+        tags.forEach(tag => {
+            if (!allTags[tag]) {
+                allTags[tag] = [];
+            }
+            allTags[tag].push({
+                title: frontMatter.title || slug.replace(/-/g, ' '),
+                date: date,
+                path: `${siteConfig.basePath}/posts/${slug}`,
+                fullDate: new Date(date + 'T00:00:00Z').toUTCString(),
+                fullUrl: `${siteConfig.siteUrl}${siteConfig.basePath}/posts/${slug}.html`,
+                description: frontMatter.description || siteConfig.description,
+            });
         });
     }
 });
+
+// After the loop, sort posts within each tag by date (descending)
+for (const tag in allTags) {
+    allTags[tag].sort((a, b) => new Date(b.date) - new Date(a.date));
+}
 
 console.info('⌛️ Processing index, images, extras, and RSS feed...');
 
@@ -273,6 +307,34 @@ const rssXml = rssTemplate({
 }); // Pass site name
 fs.writeFileSync(path.join(publicDir, 'rss.xml'), rssXml);
 console.log(`✅ Generated RSS feed [added latest ${maxFeedItems} items out of ${postsData.length}]`);
+
+console.info('⌛️ Processing tag pages...');
+// Create the main tag directory
+const publicTagDir = path.join(publicDir, 'tag');
+fs.ensureDirSync(publicTagDir);
+
+// Generate pages for each tag
+for (const tag in allTags) {
+    const specificTagDir = path.join(publicTagDir, tag);
+    fs.ensureDirSync(specificTagDir);
+
+    const templateDataForTagPage = {
+        navItems: navItems,
+        basePath: siteConfig.basePath,
+        minifiedCSS: minifiedCss,
+        siteName: siteConfig.name,
+        pageTitle: `Tag: ${tag} — ${siteConfig.name}`,
+        pageDescription: `Posts tagged with "${tag}" on ${siteConfig.name}`,
+        ogImage: defaultOgImage,
+        author: siteConfig.author,
+        title: `Tag: ${tag}`,
+        items: allTags[tag]
+    };
+
+    const tagPageHtml = listTemplate(templateDataForTagPage);
+    fs.writeFileSync(path.join(specificTagDir, 'index.html'), tagPageHtml);
+    console.log(`✅ Generated tag page: ${tag}`);
+}
 
 // Copy the folder /images to the public directory
 const publicImagesDir = path.join(publicDir, 'images');

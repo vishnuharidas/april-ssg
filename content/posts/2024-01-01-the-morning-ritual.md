@@ -1,6 +1,7 @@
 ---
 title: "The Morning Ritual"
 description: "A short reflection on the power of morning routines."
+tags: productivity, motivation, help
 ---
 
 Waking up early is never easy, but it sets the tone for the day. 

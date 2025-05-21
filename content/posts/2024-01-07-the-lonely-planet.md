@@ -1,6 +1,10 @@
 ---
 title: "The Lonely Planet: A Tale of Cosmic Solitude"
 description: "A sci-fi vignette about a planet waiting for visitors."
+tags:
+  - sci-fi
+  - solitude
+  - fiction
 ---
 
 Far from any sun, a blue planet drifted in silence. Its surface was covered in frozen oceans and ancient craters.

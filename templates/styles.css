@@ -240,6 +240,14 @@ iframe {
     width: 100% !important;
 }
 
+.post-tags {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
 @media(max-width: 600px) {
     .main-list {
         gap: 1.2rem;

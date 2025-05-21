@@ -1,6 +1,9 @@
 ---
 title: "Understanding `this` in JavaScript Callbacks"
 description: "A common JavaScript pitfall: losing the `this` context in callbacks and how to fix it."
+tags:
+  - programming
+  - tutorial
 ---
 
 One frequent mistake JavaScript developers encounter involves the `this` keyword losing its context, especially when passing object methods as callbacks.

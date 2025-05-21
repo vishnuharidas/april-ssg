@@ -1,6 +1,10 @@
 ---
 title: "A Table of Notable Books from an Old Library"
 description: "A nostalgic visit to a forgotten library."
+tags:
+  - books
+  - literature
+  - history
 ---
 
 The doors creaked open, revealing rows of dusty books. Sunlight filtered through stained glass, painting rainbows on the floor.

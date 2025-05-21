@@ -1,6 +1,10 @@
 ---
 title: "Mystery of the Missing Semicolon"
 description: "A thrilling tale of debugging where Detective Byte uncovers the mystery behind a failed website launch caused by a missing semicolon."
+tags:
+  - mystery
+  - story
+  - programming
 ---
 
 ## The Case Begins

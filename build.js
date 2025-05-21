@@ -233,7 +233,7 @@ fs.readdirSync(postsDir).forEach(file => {
             date: date,
             path: `${siteConfig.basePath}/posts/${slug}`,
             fullDate: new Date(date + 'T00:00:00Z').toUTCString(),
-            fullUrl: `${siteConfig.siteUrl}${siteConfig.basePath}/posts/${slug}.html`,
+            fullUrl: `${siteConfig.siteUrl}${siteConfig.basePath}/posts/${slug}`,
             description: frontMatter.description || siteConfig.description,
             tags: tags // Add tags to postsData items
         });
@@ -248,7 +248,6 @@ fs.readdirSync(postsDir).forEach(file => {
                 date: date,
                 path: `${siteConfig.basePath}/posts/${slug}`,
                 fullDate: new Date(date + 'T00:00:00Z').toUTCString(),
-                fullUrl: `${siteConfig.siteUrl}${siteConfig.basePath}/posts/${slug}.html`,
                 description: frontMatter.description || siteConfig.description,
             });
         });
@@ -349,7 +348,7 @@ for (const tag in allTags) {
 // Sort tags by count (descending)
 tagIndexList.sort((a, b) => b.count - a.count);
 
-const tagIndexTempalte = {
+const tagIndexTemplate = {
     navItems: navItems,
     basePath: siteConfig.basePath,
     minifiedCSS: minifiedCss,
@@ -361,7 +360,7 @@ const tagIndexTempalte = {
     title: `All Tags`,
     tags: tagIndexList
 };
-const tagIndexHtml = tagsListTemplate(tagIndexTempalte);
+const tagIndexHtml = tagsListTemplate(tagIndexTemplate);
 fs.writeFileSync(path.join(publicTagDir, 'index.html'), tagIndexHtml);
 console.log(`✅ Generated tag index page: tags/index.html`);
 

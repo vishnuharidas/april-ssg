@@ -81,21 +81,15 @@ renderer.image = (href, title, text) => {
 renderer.link = function(href, title, text) {
   const isExternal = href.startsWith('http') && !href.startsWith(siteConfig.siteUrl);
 
+  const fullHref = isExternal ? href : `${siteConfig.basePath}${href}`;
   const targetAttr = isExternal ? ' target="_blank" rel="noopener"' : '';
   const suffix = isExternal ? '<svg aria-hidden="true" focusable="false" width="0.6em" height="0.6em" viewBox="0 0 24 24" style="vertical-align:text-top;"><path d="M5 19L19 5M5 5h14v14" stroke="currentColor" fill="none" stroke-width="3"/></svg>' : '';
   const titleAttr = title ? ` title="${title}"` : '';
 
-  return `<a href="${href}"${titleAttr}${targetAttr}>${text}${suffix}</a>`;
+  return `<a href="${fullHref}"${titleAttr}${targetAttr}>${text}${suffix}</a>`;
 };
 
 marked.use({ renderer });
-
-const navItems = siteConfig.menu.map(item => {
-    return {
-        title: item.title,
-        path: item.path.startsWith("http") ? item.path : `${siteConfig.basePath}${item.path}`,
-    };
-})
 
 const defaultOgImage = `${siteConfig.siteUrl}${siteConfig.basePath}/${siteConfig.ogImage}`;
 
@@ -133,7 +127,7 @@ fs.readdirSync(pagesDir).forEach(file => {
         }
 
         const pageData = {
-            navItems: navItems,
+            navItems: siteConfig.menu,
             basePath: siteConfig.basePath, // Pass base path
             siteName: siteConfig.name, // Pass site name
             minifiedCSS: minifiedCss, // Pass minified CSS
@@ -205,7 +199,7 @@ fs.readdirSync(postsDir).forEach(file => {
 
         // Prepare data for the post template
         const postData = {
-            navItems: navItems,
+            navItems: siteConfig.menu,
             basePath: siteConfig.basePath, // Pass base path
             minifiedCSS: minifiedCss, // Pass minified CSS
             pageDescription: frontMatter.description || siteConfig.description,
@@ -217,7 +211,6 @@ fs.readdirSync(postsDir).forEach(file => {
             date: date,
             content: htmlContent,
             needsHighlightJS: htmlContent.includes('<pre><code'),
-            path: `${siteConfig.basePath}/posts/${slug}.html`, // Path for linking in the list
             tags: tags // Add tags to postData
         };
 
@@ -231,9 +224,8 @@ fs.readdirSync(postsDir).forEach(file => {
         postsData.push({
             title: frontMatter.title || slug.replace(/-/g, ' '), // Use title from front matter or generate from slug
             date: date,
-            path: `${siteConfig.basePath}/posts/${slug}`,
+            path: `/posts/${slug}`,
             fullDate: new Date(date + 'T00:00:00Z').toUTCString(),
-            fullUrl: `${siteConfig.siteUrl}${siteConfig.basePath}/posts/${slug}`,
             description: frontMatter.description || siteConfig.description,
             tags: tags // Add tags to postsData items
         });
@@ -246,7 +238,7 @@ fs.readdirSync(postsDir).forEach(file => {
             allTags[tag].push({
                 title: frontMatter.title || slug.replace(/-/g, ' '),
                 date: date,
-                path: `${siteConfig.basePath}/posts/${slug}`,
+                path: `/posts/${slug}`,
                 fullDate: new Date(date + 'T00:00:00Z').toUTCString(),
                 description: frontMatter.description || siteConfig.description,
             });
@@ -266,7 +258,7 @@ postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
 
 // Generate index page (list of posts)
 const indexHtml = listTemplate({
-    navItems: navItems,
+    navItems: siteConfig.menu,
     basePath: siteConfig.basePath,
     minifiedCSS: minifiedCss,
     siteName: siteConfig.name,
@@ -275,14 +267,14 @@ const indexHtml = listTemplate({
     ogImage: defaultOgImage,
     author: siteConfig.author,
     title: 'All Posts',
-    items: postsData
+    items: postsData,
 }); // Pass site name
 fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
 console.log(`✅ Generated index.html`);
 
 // Generate 404 page (list of posts)
 const e404Html = e404Template({
-    navItems: navItems,
+    navItems: siteConfig.menu,
     basePath: siteConfig.basePath,
     minifiedCSS: minifiedCss,
     siteName: siteConfig.name,
@@ -302,6 +294,7 @@ const rssXml = rssTemplate({
     siteTitle: siteConfig.name,
     siteDescription: siteConfig.description,
     siteUrl: siteConfig.siteUrl,
+    basePath: siteConfig.basePath,
     rssBuildDate: new Date().toUTCString(),
     items: postsData.slice(0, maxFeedItems)
 }); // Pass site name
@@ -319,7 +312,7 @@ for (const tag in allTags) {
     fs.ensureDirSync(specificTagDir);
 
     const templateDataForTagPage = {
-        navItems: navItems,
+        navItems: siteConfig.menu,
         basePath: siteConfig.basePath,
         minifiedCSS: minifiedCss,
         siteName: siteConfig.name,
@@ -349,7 +342,7 @@ for (const tag in allTags) {
 tagIndexList.sort((a, b) => b.count - a.count);
 
 const tagIndexTemplate = {
-    navItems: navItems,
+    navItems: siteConfig.menu,
     basePath: siteConfig.basePath,
     minifiedCSS: minifiedCss,
     siteName: siteConfig.name,

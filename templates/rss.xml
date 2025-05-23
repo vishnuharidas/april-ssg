@@ -8,10 +8,10 @@
         {{#each items}}
         <item>
             <title>{{this.title}}</title>
-            <link>{{this.fullUrl}}</link>
+            <link>{{ ../siteUrl }}{{ ../basePath }}{{ this.path }}</link>
             <description><![CDATA[{{this.description}}]]></description>
             <pubDate>{{this.fullDate}}</pubDate>
-            <guid isPermaLink="true">{{this.fullUrl}}</guid>
+            <guid isPermaLink="true">{{ ../siteUrl }}{{ ../basePath }}{{ this.path }}</guid>
         </item>
         {{/each}}
     </channel>

@@ -50,6 +50,7 @@ For specific instructions on deploying to popular platforms, see the guides:
 - [Publishing on GitHub Pages](docs/github-pages/README.md)
 - [Publishing on GitLab Pages](docs/gitlab-pages/README.md)
 - [Publishing on Cloudflare Pages](docs/cloudflare-pages/README.md)
+- [Publishing on Netlify](docs/netlify/README.md)
 
 
 ## 📁 Folder Structure
@@ -86,6 +87,7 @@ templates/
 ├── page.html       → Template for standalone pages
 ├── post.html       → Template for blog posts
 ├── rss.xml         → Template for RSS feed
+├── tags.xml        → Template for tags with count
 └── styles.css      → Styles for the website
 ```
 

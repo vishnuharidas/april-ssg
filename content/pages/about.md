@@ -82,6 +82,7 @@ templates/
 ├── page.html       → Template for standalone pages
 ├── post.html       → Template for blog posts
 ├── rss.xml         → Template for RSS feed
+├── tags.xml        → Template for tags with count
 └── styles.css      → Styles for the website
 ```
 ## 📄 License

@@ -384,7 +384,7 @@ for (const tag in allTags) {
 
         },
         content: {
-            title: `All Tags`,
+            title:`Tag: ${tag}`,
             items: allTags[tag],
         },
     });

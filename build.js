@@ -62,41 +62,41 @@ const pageTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, '
 const rssTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'rss.xml'), 'utf-8'));
 
 const allPosts = [];
-const allTags = {}; 
+const allTags = {};
 
 // This is to fix the image links in the markdown files
 const renderer = new marked.Renderer();
 renderer.image = (href, title, text) => {
-  const fixedHref = href.startsWith('/') ? `${siteConfig.basePath}${href}` : href;
+    const fixedHref = href.startsWith('/') ? `${siteConfig.basePath}${href}` : href;
 
-  let width = '';
-  let height = '';
-  let titleAttr = '';
+    let width = '';
+    let height = '';
+    let titleAttr = '';
 
-  // If title is in the format "400x300" or 'some text 400x300'
-  if (title && /\b\d{2,4}x\d{2,4}\b/.test(title)) {
-    const match = title.match(/(\d{2,4})x(\d{2,4})/);
-    if (match) {
-      width = match[1];
-      height = match[2];
-      titleAttr = title.replace(match[0], '').trim();
+    // If title is in the format "400x300" or 'some text 400x300'
+    if (title && /\b\d{2,4}x\d{2,4}\b/.test(title)) {
+        const match = title.match(/(\d{2,4})x(\d{2,4})/);
+        if (match) {
+            width = match[1];
+            height = match[2];
+            titleAttr = title.replace(match[0], '').trim();
+        }
+    } else {
+        titleAttr = title;
     }
-  } else {
-    titleAttr = title;
-  }
 
-  return `<img src="${fixedHref}" alt="${text}"${titleAttr ? ` title="${titleAttr}"` : ''}${width && height ? ` width="${width}" height="${height}"` : ''}>`;
+    return `<img src="${fixedHref}" alt="${text}"${titleAttr ? ` title="${titleAttr}"` : ''}${width && height ? ` width="${width}" height="${height}"` : ''}>`;
 };
 
-renderer.link = function(href, title, text) {
-  const isExternal = href.startsWith('http') && !href.startsWith(siteConfig.siteUrl);
+renderer.link = function (href, title, text) {
+    const isExternal = href.startsWith('http') && !href.startsWith(siteConfig.siteUrl);
 
-  const fullHref = isExternal ? href : `${siteConfig.basePath}${href}`;
-  const targetAttr = isExternal ? ' target="_blank" rel="noopener"' : '';
-  const suffix = isExternal ? '<svg aria-hidden="true" focusable="false" width="0.6em" height="0.6em" viewBox="0 0 24 24" style="vertical-align:text-top;"><path d="M5 19L19 5M5 5h14v14" stroke="currentColor" fill="none" stroke-width="3"/></svg>' : '';
-  const titleAttr = title ? ` title="${title}"` : '';
+    const fullHref = isExternal ? href : `${siteConfig.basePath}${href}`;
+    const targetAttr = isExternal ? ' target="_blank" rel="noopener"' : '';
+    const suffix = isExternal ? '<svg aria-hidden="true" focusable="false" width="0.6em" height="0.6em" viewBox="0 0 24 24" style="vertical-align:text-top;"><path d="M5 19L19 5M5 5h14v14" stroke="currentColor" fill="none" stroke-width="3"/></svg>' : '';
+    const titleAttr = title ? ` title="${title}"` : '';
 
-  return `<a href="${fullHref}"${titleAttr}${targetAttr}>${text}${suffix}</a>`;
+    return `<a href="${fullHref}"${titleAttr}${targetAttr}>${text}${suffix}</a>`;
 };
 
 marked.use({ renderer });
@@ -393,7 +393,7 @@ for (const tag in allTags) {
 
         },
         content: {
-            title:`Tag: ${tag}`,
+            title: `Tag: ${tag}`,
             items: allTags[tag],
         },
     });

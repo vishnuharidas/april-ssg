@@ -226,6 +226,7 @@ fs.readdirSync(postsDir).forEach(file => {
             date: {
                 shortDate: date,
                 longDate: new Date(date + 'T00:00:00Z').toUTCString(),
+                dateObj: new Date(date + 'T00:00:00Z'), // Cache Date object for sorting
             },
             content: htmlContent,
             tags: tags,
@@ -277,13 +278,12 @@ fs.readdirSync(postsDir).forEach(file => {
 
 // After the loop, sort posts within each tag by date (descending)
 for (const tag in allTags) {
-    allTags[tag].sort((a, b) => new Date(b.date) - new Date(a.date));
+    allTags[tag].sort((a, b) => b.date.dateObj - a.date.dateObj);
 }
 
 console.info('⌛️ Processing index, images, extras, and RSS feed...');
 
-// Sort posts by date (descending)
-allPosts.sort((a, b) => new Date(b.date.shortDate) - new Date(a.date.shortDate));
+allPosts.sort((a, b) => b.date.dateObj - a.date.dateObj);
 
 // Shared header base object for index, 404, and tag pages
 const headerBase = {

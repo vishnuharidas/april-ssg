@@ -285,29 +285,29 @@ console.info('⌛️ Processing index, images, extras, and RSS feed...');
 // Sort posts by date (descending)
 allPosts.sort((a, b) => new Date(b.date.shortDate) - new Date(a.date.shortDate));
 
+// Shared header base object for index, 404, and tag pages
+const headerBase = {
+    title: siteConfig.name,
+    meta: {
+        description: siteConfig.description,
+        author: siteConfig.author,
+    },
+    og: {
+        title: siteConfig.name,
+        description: siteConfig.description,
+        image: defaultOgImage,
+    },
+    css: {
+        minified: minifiedCss,
+        needsHighlightJS: false,
+    },
+};
+
 // Generate index page (list of posts)
 const indexHtml = listTemplate({
     config: siteConfig,
     header: {
-        title: siteConfig.name,
-        meta: {
-            description: siteConfig.description,
-            author: siteConfig.author,
-        },
-
-        // CSS
-        css: {
-            minified: minifiedCss,
-            needsHighlightJS: false,
-        },
-
-        // Open Graph metadata
-        og: {
-            title: `All Posts — ${siteConfig.name}`,
-            description: siteConfig.description,
-            image: defaultOgImage,
-        },
-
+        ...headerBase,
     },
     content: {
         title: `All Posts`,
@@ -321,25 +321,7 @@ console.log(`✅ Generated index.html`);
 const e404Html = e404Template({
     config: siteConfig,
     header: {
-        title: siteConfig.name,
-        meta: {
-            description: siteConfig.description,
-            author: siteConfig.author,
-        },
-
-        // CSS
-        css: {
-            minified: minifiedCss,
-            needsHighlightJS: false,
-        },
-
-        // Open Graph metadata
-        og: {
-            title: `All Posts — ${siteConfig.name}`,
-            description: siteConfig.description,
-            image: defaultOgImage,
-        },
-
+        ...headerBase,
     },
     content: {
         title: `All Posts`,
@@ -372,23 +354,18 @@ for (const tag in allTags) {
     const tagPageHtml = listTemplate({
         config: siteConfig,
         header: {
+            ...headerBase,
             title: `Tag: ${tag} — ${siteConfig.name}`,
             meta: {
+                ...headerBase.meta,
                 description: `Posts tagged with "${tag}" on ${siteConfig.name}`,
-                author: siteConfig.author,
-            },
-
-            // CSS
-            css: {
-                minified: minifiedCss,
-                needsHighlightJS: false,
             },
 
             // Open Graph metadata
             og: {
+                ...headerBase.og,
                 title: `Tag: ${tag} — ${siteConfig.name}`,
                 description: `Posts tagged with "${tag}" on ${siteConfig.name}`,
-                image: defaultOgImage,
             },
 
         },
@@ -416,23 +393,18 @@ tagIndexList.sort((a, b) => b.count - a.count);
 const tagIndexHtml = tagsListTemplate({
     config: siteConfig,
     header: {
+        ...headerBase,
         title: `All Tags — ${siteConfig.name}`,
         meta: {
+            ...headerBase.meta,
             description: `Explore tags on ${siteConfig.name}`,
-            author: siteConfig.author,
-        },
-
-        // CSS
-        css: {
-            minified: minifiedCss,
-            needsHighlightJS: false,
         },
 
         // Open Graph metadata
         og: {
+            ...headerBase.og,
             title: `All Tags — ${siteConfig.name}`,
             description: `Explore tags on ${siteConfig.name}`,
-            image: defaultOgImage,
         },
 
     },

@@ -4,7 +4,7 @@
         <link>{{config.siteUrl}}{{config.basePath}}</link>
         <description>{{config.description}}</description>
         <lastBuildDate>{{rssBuildDate}}</lastBuildDate>
-        <atom:link href="{{config.siteUrl}}/rss.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="{{config.siteUrl}}{{config.basePath}}/rss.xml" rel="self" type="application/rss+xml" />
         {{#each items}}
         <item>
             <title>{{this.title}}</title>

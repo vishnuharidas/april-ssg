@@ -20,6 +20,15 @@ if (!fs.existsSync(configFullPath)) {
 // Read site configuration
 const siteConfig = JSON.parse(fs.readFileSync(configFullPath, 'utf8'));
 
+// Update siteConfig.menu to prepend basePath for local menu links.
+// This is handled here to remove additional processing in templates.
+siteConfig.menu = siteConfig.menu.map(item =>
+    item.path.startsWith('http') ? item : {
+        ...item,
+        path: `${siteConfig.basePath}${item.path}`
+    }
+);
+
 // Use paths from config
 const postsDir = path.join(contentDir, siteConfig.dirs.posts);
 const pagesDir = path.join(contentDir, siteConfig.dirs.pages);

@@ -1,8 +1,8 @@
 {{> header }}
-<h2>{{ title }}</h2>
+<h2>{{ content.title }}</h2>
 <ul>
-    {{#each tags}}
-    <li><a href="{{ ../basePath }}/tags/{{ this.title }}/">{{ this.title }}</a>({{this.count}})</li>
+    {{#each content.tags}}
+    <li><a href="{{ ../config.basePath }}/tags/{{ this.title }}/">{{ this.title }}</a>({{this.count}})</li>
     {{/each}}
 </ul>
 {{> footer }}

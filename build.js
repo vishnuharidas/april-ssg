@@ -52,7 +52,8 @@ const e404Template = Handlebars.compile(fs.readFileSync(path.join(templateDir, '
 const pageTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'page.html'), 'utf-8'));
 const rssTemplate = Handlebars.compile(fs.readFileSync(path.join(templateDir, 'rss.xml'), 'utf-8'));
 
-const postsData = [];
+const allPosts = [];
+const allTags = {}; 
 
 // This is to fix the image links in the markdown files
 const renderer = new marked.Renderer();
@@ -126,30 +127,43 @@ fs.readdirSync(pagesDir).forEach(file => {
             }
         }
 
-        const pageData = {
-            navItems: siteConfig.menu,
-            basePath: siteConfig.basePath, // Pass base path
-            siteName: siteConfig.name, // Pass site name
-            minifiedCSS: minifiedCss, // Pass minified CSS
-            pageDescription: frontMatter.description || siteConfig.description,
-            ogImage: ogImage,
-            author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
-            pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
-            pageDesciption: frontMatter.content || '', // Use description from front matter
-            title: frontMatter.title || slug.replace(/-/g, ' '), // Use title from front matter or generate from slug
-            needsHighlightJS: htmlContent.includes('<pre><code'),
-            content: htmlContent
-        };
+        const pageHtml = pageTemplate({
+            config: siteConfig,
+            header: {
 
-        const pageHtml = pageTemplate(pageData);
+                title: `${frontMatter.title} — ${siteConfig.name}`,
+
+                meta: {
+                    description: frontMatter.description || siteConfig.description,
+                    author: siteConfig.author,
+                },
+
+                // CSS
+                css: {
+                    minified: minifiedCss,
+                    needsHighlightJS: htmlContent.includes('<pre><code'),
+                },
+
+                // Open Graph metadata
+                og: {
+                    title: `${frontMatter.title} — ${siteConfig.name}`, // Use title from front matter or generate from slug
+                    description: frontMatter.description || siteConfig.description,
+                    image: ogImage,
+                },
+
+            },
+            content: {
+                title: frontMatter.title || slug.replace(/-/g, ' '), // Use title from front matter or generate from slug
+                content: htmlContent
+            }
+        });
         fs.writeFileSync(path.join(publicDir, `${slug}.html`), pageHtml);
+
         console.log(`✅ Processed page: ${file}`);
     }
 });
 
 console.info('⌛️ Processing posts...');
-
-const allTags = {}; // Initialize allTags object
 
 // Read and process markdown files from posts directory
 fs.readdirSync(postsDir).forEach(file => {
@@ -192,56 +206,62 @@ fs.readdirSync(postsDir).forEach(file => {
             const imgMatch = htmlContent.match(/<img[^>]+src="([^">]+)"/);
             if (imgMatch && imgMatch[1]) {
                 ogImage = imgMatch[1].startsWith('/') // Use images from this website only
-                    ? `${siteConfig.siteUrl}${siteConfig.basePath}${imgMatch[1]}`
+                    ? `${siteConfig.siteUrl}${imgMatch[1]}`
                     : defaultOgImage;
             }
         }
 
-        // Prepare data for the post template
-        const postData = {
-            navItems: siteConfig.menu,
-            basePath: siteConfig.basePath, // Pass base path
-            minifiedCSS: minifiedCss, // Pass minified CSS
-            pageDescription: frontMatter.description || siteConfig.description,
-            ogImage: ogImage,
-            pageTitle: `${frontMatter.title} — ${siteConfig.name}`, // Pass site name
-            siteName: siteConfig.name, // Pass site name
-            author: frontMatter.author || siteConfig.author, // Use author from front matter or site config
-            ...frontMatter, // Include front matter data (like title)
-            date: date,
+        const postContent = {
+            title: frontMatter.title || slug.replace(/-/g, ' '), // Use title from front matter or generate from slug
+            description: frontMatter.description || siteConfig.description,
+            date: {
+                shortDate: date,
+                longDate: new Date(date + 'T00:00:00Z').toUTCString(),
+            },
             content: htmlContent,
-            needsHighlightJS: htmlContent.includes('<pre><code'),
-            tags: tags // Add tags to postData
+            tags: tags,
+            path: `/posts/${slug}`,
         };
 
         // Generate individual post HTML
-        const postHtml = postTemplate(postData);
+        const postHtml = postTemplate({
+            config: siteConfig,
+            header: {
+                title: `${frontMatter.title} — ${siteConfig.name}`,
+                meta: {
+                    description: frontMatter.description || siteConfig.description,
+                    author: siteConfig.author,
+                },
+
+                // CSS
+                css: {
+                    minified: minifiedCss,
+                    needsHighlightJS: htmlContent.includes('<pre><code'),
+                },
+
+                // Open Graph metadata
+                og: {
+                    title: `${frontMatter.title} — ${siteConfig.name}`, // Use title from front matter or generate from slug
+                    description: frontMatter.description || siteConfig.description,
+                    image: ogImage,
+                },
+
+            },
+            post: postContent,
+        });
         fs.writeFileSync(path.join(publicPostsDir, `${slug}.html`), postHtml);
 
         console.log(`✅ Processed post: ${slug}.html`);
 
         // Add data for the index list
-        postsData.push({
-            title: frontMatter.title || slug.replace(/-/g, ' '), // Use title from front matter or generate from slug
-            date: date,
-            path: `/posts/${slug}`,
-            fullDate: new Date(date + 'T00:00:00Z').toUTCString(),
-            description: frontMatter.description || siteConfig.description,
-            tags: tags // Add tags to postsData items
-        });
+        allPosts.push(postContent);
 
         // Populate allTags
         tags.forEach(tag => {
             if (!allTags[tag]) {
                 allTags[tag] = [];
             }
-            allTags[tag].push({
-                title: frontMatter.title || slug.replace(/-/g, ' '),
-                date: date,
-                path: `/posts/${slug}`,
-                fullDate: new Date(date + 'T00:00:00Z').toUTCString(),
-                description: frontMatter.description || siteConfig.description,
-            });
+            allTags[tag].push(postContent);
         });
     }
 });
@@ -254,52 +274,81 @@ for (const tag in allTags) {
 console.info('⌛️ Processing index, images, extras, and RSS feed...');
 
 // Sort posts by date (descending)
-postsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+allPosts.sort((a, b) => new Date(b.date.shortDate) - new Date(a.date.shortDate));
 
 // Generate index page (list of posts)
 const indexHtml = listTemplate({
-    navItems: siteConfig.menu,
-    basePath: siteConfig.basePath,
-    minifiedCSS: minifiedCss,
-    siteName: siteConfig.name,
-    pageTitle: siteConfig.name,
-    pageDescription: siteConfig.description,
-    ogImage: defaultOgImage,
-    author: siteConfig.author,
-    title: 'All Posts',
-    items: postsData,
+    config: siteConfig,
+    header: {
+        title: siteConfig.name,
+        meta: {
+            description: siteConfig.description,
+            author: siteConfig.author,
+        },
+
+        // CSS
+        css: {
+            minified: minifiedCss,
+            needsHighlightJS: false,
+        },
+
+        // Open Graph metadata
+        og: {
+            title: `All Posts — ${siteConfig.name}`,
+            description: siteConfig.description,
+            image: defaultOgImage,
+        },
+
+    },
+    content: {
+        title: `All Posts`,
+        items: allPosts,
+    },
 }); // Pass site name
 fs.writeFileSync(path.join(publicDir, 'index.html'), indexHtml);
 console.log(`✅ Generated index.html`);
 
 // Generate 404 page (list of posts)
 const e404Html = e404Template({
-    navItems: siteConfig.menu,
-    basePath: siteConfig.basePath,
-    minifiedCSS: minifiedCss,
-    siteName: siteConfig.name,
-    pageTitle: siteConfig.name,
-    pageDescription: siteConfig.description,
-    ogImage: defaultOgImage,
-    author: siteConfig.author,
-    title: 'All Posts',
-    items: postsData
+    config: siteConfig,
+    header: {
+        title: siteConfig.name,
+        meta: {
+            description: siteConfig.description,
+            author: siteConfig.author,
+        },
+
+        // CSS
+        css: {
+            minified: minifiedCss,
+            needsHighlightJS: false,
+        },
+
+        // Open Graph metadata
+        og: {
+            title: `All Posts — ${siteConfig.name}`,
+            description: siteConfig.description,
+            image: defaultOgImage,
+        },
+
+    },
+    content: {
+        title: `All Posts`,
+        items: allPosts,
+    },
 }); // Pass site name
 fs.writeFileSync(path.join(publicDir, '404.html'), e404Html);
 console.log(`✅ Generated 404.html`);
 
 // Generate RSS feed - add latest 10 items if more than 100 posts. Otherwise, add all 100 posts.
-const maxFeedItems = postsData.length > 100 ? 10 : postsData.length;
+const maxFeedItems = allPosts.length > 100 ? 10 : allPosts.length;
 const rssXml = rssTemplate({
-    siteTitle: siteConfig.name,
-    siteDescription: siteConfig.description,
-    siteUrl: siteConfig.siteUrl,
-    basePath: siteConfig.basePath,
+    config: siteConfig,
     rssBuildDate: new Date().toUTCString(),
-    items: postsData.slice(0, maxFeedItems)
+    items: allPosts.slice(0, maxFeedItems)
 }); // Pass site name
 fs.writeFileSync(path.join(publicDir, 'rss.xml'), rssXml);
-console.log(`✅ Generated RSS feed [added latest ${maxFeedItems} items out of ${postsData.length}]`);
+console.log(`✅ Generated RSS feed [added latest ${maxFeedItems} items out of ${allPosts.length}]`);
 
 console.info('⌛️ Processing tag pages...');
 // Create the main tag directory
@@ -311,20 +360,34 @@ for (const tag in allTags) {
     const specificTagDir = path.join(publicTagDir, tag);
     fs.ensureDirSync(specificTagDir);
 
-    const templateDataForTagPage = {
-        navItems: siteConfig.menu,
-        basePath: siteConfig.basePath,
-        minifiedCSS: minifiedCss,
-        siteName: siteConfig.name,
-        pageTitle: `Tag: ${tag} — ${siteConfig.name}`,
-        pageDescription: `Posts tagged with "${tag}" on ${siteConfig.name}`,
-        ogImage: defaultOgImage,
-        author: siteConfig.author,
-        title: `Tag: ${tag}`,
-        items: allTags[tag]
-    };
+    const tagPageHtml = listTemplate({
+        config: siteConfig,
+        header: {
+            title: `Tag: ${tag} — ${siteConfig.name}`,
+            meta: {
+                description: `Posts tagged with "${tag}" on ${siteConfig.name}`,
+                author: siteConfig.author,
+            },
 
-    const tagPageHtml = listTemplate(templateDataForTagPage);
+            // CSS
+            css: {
+                minified: minifiedCss,
+                needsHighlightJS: false,
+            },
+
+            // Open Graph metadata
+            og: {
+                title: `Tag: ${tag} — ${siteConfig.name}`,
+                description: `Posts tagged with "${tag}" on ${siteConfig.name}`,
+                image: defaultOgImage,
+            },
+
+        },
+        content: {
+            title: `All Tags`,
+            items: allTags[tag],
+        },
+    });
     fs.writeFileSync(path.join(specificTagDir, 'index.html'), tagPageHtml);
     console.log(`✅ Generated tag page: ${tag}`);
 }
@@ -341,19 +404,34 @@ for (const tag in allTags) {
 // Sort tags by count (descending)
 tagIndexList.sort((a, b) => b.count - a.count);
 
-const tagIndexTemplate = {
-    navItems: siteConfig.menu,
-    basePath: siteConfig.basePath,
-    minifiedCSS: minifiedCss,
-    siteName: siteConfig.name,
-    pageTitle: `Tags — ${siteConfig.name}`,
-    pageDescription: `Explore tags on ${siteConfig.name}`,
-    ogImage: defaultOgImage,
-    author: siteConfig.author,
-    title: `All Tags`,
-    tags: tagIndexList
-};
-const tagIndexHtml = tagsListTemplate(tagIndexTemplate);
+const tagIndexHtml = tagsListTemplate({
+    config: siteConfig,
+    header: {
+        title: `All Tags — ${siteConfig.name}`,
+        meta: {
+            description: `Explore tags on ${siteConfig.name}`,
+            author: siteConfig.author,
+        },
+
+        // CSS
+        css: {
+            minified: minifiedCss,
+            needsHighlightJS: false,
+        },
+
+        // Open Graph metadata
+        og: {
+            title: `All Tags — ${siteConfig.name}`,
+            description: `Explore tags on ${siteConfig.name}`,
+            image: defaultOgImage,
+        },
+
+    },
+    content: {
+        title: `All Tags`,
+        tags: tagIndexList,
+    },
+});
 fs.writeFileSync(path.join(publicTagDir, 'index.html'), tagIndexHtml);
 console.log(`✅ Generated tag index page: tags/index.html`);
 

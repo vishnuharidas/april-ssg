@@ -1,8 +1,8 @@
 {{> header }}
 <div class="april-ssg-notfound">That's a 404. You might be interested in reading some of these articles:</div>
 <ul class="main-list">
-    {{#each items}}
-    <li><time datetime="{{this.date}}">{{ this.date }}</time> <a href="{{ ../basePath }}{{ this.path }}">{{ this.title }}</a></li>
+    {{#each content.items}}
+    <li><time datetime="{{this.date.shortDate}}">{{ this.date.shortDate }}</time> <a href="{{ ../config.basePath }}{{ this.path }}">{{ this.title }}</a></li>
     {{/each}}
 </ul>
 {{> footer }}

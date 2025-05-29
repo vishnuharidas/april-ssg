@@ -1,8 +1,8 @@
 {{> header }}
-<h2>{{ title }}</h2>
+<h2>{{ content.title }}</h2>
 <ul class="main-list">
-    {{#each items}}
-    <li><time datetime="{{this.date}}">{{ this.date }}</time> <a href="{{ ../basePath }}{{ this.path }}">{{ this.title }}</a></li>
+    {{#each content.items}}
+    <li><time datetime="{{this.date.shortDate}}">{{ this.date.shortDate }}</time> <a href="{{ ../config.basePath }}{{ this.path }}">{{ this.title }}</a></li>
     {{/each}}
 </ul>
 {{> footer }}

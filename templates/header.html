@@ -2,29 +2,29 @@
 <html lang="en">
 
 <head>
-    <title>{{ pageTitle }}</title>
+    <title>{{ header.title }}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
-    <meta name="description" content="{{ pageDescription }}">
-    <meta name="author" content="{{ author }}">
-    <meta property="og:title" content="{{ pageTitle }}">
-    <meta property="og:description" content="{{ pageDescription }}">
-    <meta property="og:image" content="{{ ogImage }}">
-    <link rel="alternate" type="application/rss+xml" href="{{ basePath }}/rss.xml">
-    <style>{{{ minifiedCSS }}}</style>
-    {{#if needsHighlightJS}}
+    <meta name="description" content="{{ header.meta.description }}">
+    <meta name="author" content="{{ header.meta.author }}">
+    <meta property="og:title" content="{{ header.og.title }}">
+    <meta property="og:description" content="{{ header.og.description }}">
+    <meta property="og:image" content="{{ header.og.image }}">
+    <link rel="alternate" type="application/rss+xml" href="{{ config.basePath }}/rss.xml">
+    <style>{{{ header.css.minified }}}</style>
+    {{#if header.css.needsHighlightJS}}
     {{> feature/highlight }}
     {{/if}}
 </head>
 
 <body>
     <header>
-        <h1><a href="{{ basePath }}/">{{ siteName }}</a></h1>
+        <h1><a href="{{ config.basePath }}/">{{ config.name }}</a></h1>
         <nav>
             <ul>
-                {{#each navItems}}
-                <li><a href="{{ ../basePath }}{{ this.path }}">{{ this.title }}</a></li>
+                {{#each config.menu}}
+                <li><a href="{{ this.path }}">{{ this.title }}</a></li>
                 {{/each}}
             </ul>
         </nav>

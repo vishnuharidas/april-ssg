@@ -7,3 +7,4 @@ For specific instructions on deploying to popular platforms, see the guides:
 - [Publishing on GitHub Pages](github-pages/README.md)
 - [Publishing on GitLab Pages](gitlab-pages/README.md)
 - [Publishing on Cloudflare Pages](cloudflare-pages/README.md)
+- [Publishing on Netlify](netlify/README.md)

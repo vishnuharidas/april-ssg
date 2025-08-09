@@ -26,7 +26,7 @@ if (!fs.existsSync(templateDir)) {
 }
 
 // Commands
-const nodemonCmd = `nodemon --watch ${contentDir} --watch ${templateDir} --ext html,md,css,json --exec npm run build -- ${contentDir}`;
+const nodemonCmd = `nodemon --watch build.js --watch ${contentDir} --watch ${templateDir} --ext html,md,css,json --exec npm run build -- ${contentDir}`;
 const serverCmd = `http-server -p 8080 -c-1 -- ${outputDir}`;
 
 // Use concurrently as a subprocess

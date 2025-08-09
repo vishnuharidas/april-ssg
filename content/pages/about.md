@@ -14,6 +14,7 @@ Getting started is easy. Clone or fork this repository and you're ready to build
 ```bash
 git clone https://github.com/vishnuharidas/april-ssg.git my-site
 cd my-site
+npm install   # one-time to install dependencies
 ```
 
 ## 🧪 Building and Previewing Your Website

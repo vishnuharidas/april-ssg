@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+# Simple shim to run april-ssg without npm scripts.
+# Usage: ./april-ssg build [contentDir]
+#        ./april-ssg preview [contentDir]
+
+set -e
+cmd="$1"; shift || true
+content_dir="${1:-content}"
+
+case "$cmd" in
+  build|"")
+    exec node "$(dirname "$0")/build.js" "$content_dir"
+    ;;
+  preview|dev)
+    exec node "$(dirname "$0")/preview.js" "$content_dir"
+    ;;
+  -h|--help)
+    cat <<'EOF'
+April·SSG
+Usage:
+  april-ssg build [contentDir]
+  april-ssg preview [contentDir]
+EOF
+    ;;
+  *)
+    echo "Unknown command: $cmd" 1>&2
+    exit 1
+    ;;
+ esac

@@ -431,6 +431,7 @@ console.log('✅ Copied images to public directory');
 fs.copySync(extrasDir, publicDir, { overwrite: true });
 console.log('✅ Copied extras to public directory');
 
-console.info('-----------------------------------------------------------------------------')
-console.info('✅ SUCCESS: Build completed. Run `npm run dev` to start the server.');
-console.info('-----------------------------------------------------------------------------')
+console.info('--------------------------------------------------------------------------------------')
+console.info('✅ SUCCESS: Build completed.');
+console.info('▶ Start preview with `node preview.js contentDir` or `./april-ssg preview contentDir`.')
+console.info('--------------------------------------------------------------------------------------')

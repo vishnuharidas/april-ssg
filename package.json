@@ -3,24 +3,49 @@
   "version": "1.0.0",
   "description": "A simple, lightweight static site generator",
   "type": "module",
+  "bin": {
+    "april-ssg": "./cli.js"
+  },
   "scripts": {
     "build": "node build.js",
     "dev": "node dev.js"
   },
-  "keywords": [],
-  "author": "Vishnu Haridas",
+  "keywords": [
+    "static-site-generator",
+    "ssg"
+  ],
+  "author": "Vishnu Haridas <contact@iamvishnu.com>",
   "license": "ISC",
   "engines": {
     "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vishnuharidas/april-ssg.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vishnuharidas/april-ssg/issues"
+  },
+  "homepage": "https://github.com/vishnuharidas/april-ssg#readme",
+  "files": [
+    "cli.js",
+    "build.js",
+    "dev.js",
+    "templates/",
+    "README.md",
+    "LICENSE.txt"
+  ],
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "fs-extra": "^11.2.0",
     "gray-matter": "^4.0.3",
     "handlebars": "^4.7.8",
-    "marked": "^12.0.2"
+    "marked": "^12.0.2",
+    "clean-css": "^5.3.3"
   },
   "devDependencies": {
-    "clean-css": "^5.3.3",
     "concurrently": "^9.1.2",
     "http-server": "^14.1.1",
     "nodemon": "^3.1.10"

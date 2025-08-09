@@ -14,7 +14,6 @@ Getting started is easy. Clone or fork this repository and you're ready to build
 ```bash
 git clone https://github.com/vishnuharidas/april-ssg.git my-site
 cd my-site
-npm install
 ```
 
 ## 🧪 Building and Previewing Your Website
@@ -24,20 +23,31 @@ This repository includes sample blog posts, a page, and images to help you get s
 To build the sample site:
 
 ```bash
-npm run build
+node build.js content
 ```
 
 The generated site will be available inside the `public/` folder.
 
-To preview the site locally:
+To preview the site locally (auto-rebuild):
 
 ```bash
-npm run dev
+node preview.js content
 ```
 
-Visit [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser.
+Or use the included shim (Linux/macOS):
 
-> **Note:** The `npm run dev` command watches for file changes and automatically rebuilds the site. Simply refresh your browser to see the updates. This feature is intended to provide a faster and effortless local preview experience as you make changes.
+```bash
+chmod +x ./april-ssg
+./april-ssg preview content
+```
+
+On Windows (cmd/PowerShell):
+
+```bat
+april-ssg.cmd preview content
+```
+
+Visit [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser. The preview watches for changes and rebuilds automatically; refresh to see updates.
 
 ## 🚀 Publishing Your Website
 
@@ -82,9 +92,9 @@ templates/
 ├── page.html       → Template for standalone pages
 ├── post.html       → Template for blog posts
 ├── rss.xml         → Template for RSS feed
-├── tags.xml        → Template for tags with count
+├── tags.html       → Template for tags with count
 └── styles.css      → Styles for the website
 ```
 ## 📄 License
 
-MIT License © 2025 [Vishnu Haridas](https://iamvishnu.com). See [LICENSE](license) for full details.
+MIT License © 2025 [Vishnu Haridas](https://iamvishnu.com). See [LICENSE](/LICENSE) for full details.

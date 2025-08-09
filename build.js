@@ -1,9 +1,13 @@
-const fs = require('fs-extra');
-const path = require('path');
-const marked = require('marked');
-const Handlebars = require('handlebars');
-const matter = require('gray-matter');
-const CleanCSS = require('clean-css');
+import fs from 'fs-extra';
+import path from 'path';
+import { marked } from 'marked';
+import Handlebars from 'handlebars';
+import matter from 'gray-matter';
+import CleanCSS from 'clean-css';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Run as `$ npm run build -- content-folder-name` for a specific folder. Defaults to "content" not specified.
 const contentDir = path.resolve(__dirname, process.argv[2] || "content");

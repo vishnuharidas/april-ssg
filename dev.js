@@ -1,6 +1,6 @@
-const { spawn } = require("child_process");
-const fs = require("fs");
-const path = require("path");
+import { spawn } from "child_process";
+import fs from "fs";
+import path from "path";
 
 // Run as `$ npm run dev -- content-folder-name` for a specific folder. Defaults to "content" if not specified.
 const contentDir = process.argv[2] || "content";

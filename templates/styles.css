@@ -13,9 +13,9 @@
     --border-color: #ddd;
     --footer-text-color: #4a4a4a;
     --code-bg-color: #eeeeee;
-    --not-found-bg-color: #fdebeb;
-    --not-found-border-color: #a6a6a6;
-    --not-found-text-color: #4b4b4b;
+    --not-found-bg-color: #fff187;
+    --not-found-border-color: #dda771;
+    --not-found-text-color: #613030;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -161,8 +161,7 @@ code {
     margin-bottom: 1.5rem;
     margin-top: 1rem;
     background: var(--not-found-bg-color);
-    border: 2px solid var(--not-found-border-color);
-    font-size: medium;
+    border: 2px dotted var(--not-found-border-color);
 }
 
 .main-list {

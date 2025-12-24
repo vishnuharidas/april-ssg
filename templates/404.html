@@ -1,5 +1,5 @@
 {{> header }}
-<div class="april-ssg-notfound">That's a 404. You might be interested in reading some of these articles:</div>
+<div class="april-ssg-notfound">Oops, that's a 404, the page that you are looking for is not found. You might be interested in reading some of these articles:</div>
 <ul class="main-list">
     {{#each content.items}}
     <li><time datetime="{{this.date.shortDate}}">{{ this.date.shortDate }}</time> <a href="{{ ../config.basePath }}{{ this.path }}">{{ this.title }}</a></li>

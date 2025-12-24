@@ -76,18 +76,15 @@ header {
     align-items: center;
 }
 
-header h1 {
+header a.site-title {
     font-size: x-large;
     font-weight: bold;
-    margin-right: 1rem;
-}
-
-header h1 a {
+    margin: 1rem 1rem 1rem 0;
     color: var(--sitename-color);
     text-decoration: none;
 }
 
-header h1 a:hover {
+header a.site-title:hover {
     color: var(--sitename-color-hover);
     text-decoration: none;
     transition: color 0.3s ease;

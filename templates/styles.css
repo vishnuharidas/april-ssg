@@ -3,12 +3,10 @@
     --base-font-size: 1.1rem;
     --line-height: 1.5;
     --sitename-color: #535353;
-    --sitename-color-hover: #000;
     --headings-color: #222;
     --text-color: #000;
     --background-color: #FFF;
     --link-color: #0877c2;
-    --link-hover-decoration: underline;
     --header-text-color: #2c2c2c;
     --border-color: #ddd;
     --footer-text-color: #4a4a4a;
@@ -21,12 +19,10 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --sitename-color: #eee;
-        --sitename-color-hover: #888888;
         --headings-color: #eee;
         --text-color: #ccc;
         --background-color: #000;
         --link-color: #60a5fa;
-        --link-hover-decoration: underline;
         --header-text-color: #eee;
         --border-color: #333;
         --footer-text-color: #999;
@@ -35,10 +31,6 @@
         --not-found-border-color: #660000;
         --not-found-text-color: #fcc;
     }
-}
-
-html {
-    font-size: 100%;
 }
 
 body {
@@ -64,13 +56,8 @@ a {
     text-decoration: underline;
 }
 
-a:hover {
-    text-decoration: var(--link-hover-decoration);
-}
-
 header {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
@@ -85,9 +72,7 @@ header a.site-title {
 }
 
 header a.site-title:hover {
-    color: var(--sitename-color-hover);
-    text-decoration: none;
-    transition: color 0.3s ease;
+    text-decoration: underline;
 }
 
 nav ul {
@@ -114,7 +99,6 @@ article h1 {
 }
 
 article a {
-    word-break: break-word;
     overflow-wrap: anywhere;
 }
 
@@ -192,7 +176,7 @@ code {
 }
 
 .main-list>li a:hover {
-    text-decoration: var(--link-hover-decoration);
+    text-decoration: underline;
 }
 
 table {
@@ -238,38 +222,5 @@ iframe {
         margin-left: .8rem;
         margin-right: .9rem;
         font-size: 1.1rem;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    pre code::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-
-    pre code::-webkit-scrollbar-button {
-        background-color: #666;
-    }
-
-    pre code::-webkit-scrollbar-track {
-        background-color: #646464;
-    }
-
-    pre code::-webkit-scrollbar-track-piece {
-        background-color: #000;
-    }
-
-    pre code::-webkit-scrollbar-thumb {
-        height: 50px;
-        background-color: #666;
-        border-radius: 3px;
-    }
-
-    pre code::-webkit-scrollbar-corner {
-        background-color: #646464;
-    }
-
-    pre code::-webkit-resizer {
-        background-color: #666;
     }
 }

@@ -30,6 +30,10 @@ function loadExternalCSS(href) {
 <span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-green.css');">Green</span>
 <span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-blue.css');">Blue</span>
 <span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-pink.css');">Pink</span>
+<span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-sepia.css');">Sepia</span>
+<span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-dark.css');">Dark</span>
+<span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-mono.css');">Mono</span>
+<span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-twenty26.css');">Twenty26</span>
 <span class="april-ssg-theme-demo-span" onClick="loadExternalCSS('/css-showcase/styles-default.css');">Default</span>
 </div>
 

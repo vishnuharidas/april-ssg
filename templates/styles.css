@@ -85,7 +85,7 @@ article h3,
 article h4,
 article h5,
 article h6 {
-    margin-block: 2rem 0rem;
+    margin-block: 2rem 0;
     line-height: normal;
 }
 
@@ -118,7 +118,7 @@ pre {
 
 pre code {
     display: block;
-    overflow-x: scroll;
+    overflow-x: auto;
     padding: 1rem;
     white-space: pre;
     word-break: normal;
@@ -133,7 +133,6 @@ code {
 }
 
 .april-ssg-notfound {
-    display: block;
     color: var(--not-found-text-color);
     padding: 1rem;
     margin-bottom: 1.5rem;
@@ -153,7 +152,6 @@ code {
 
 .main-list>li {
     display: flex;
-    flex-direction: row;
     align-items: baseline;
     gap: 0.6rem;
 }
@@ -195,7 +193,6 @@ iframe {
 .post-tags {
     margin-top: 3rem;
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     gap: 0.5em;
 }

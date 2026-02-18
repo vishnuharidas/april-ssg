@@ -1,33 +1,33 @@
 :root {
-    --font-family: Verdana, system-ui, sans-serif;
+    --font-family: Georgia, "Times New Roman", serif;
     --base-font-size: 1em;
-    --line-height: 1.5;
-    --sitename-color: #1b5e20;
-    --headings-color: #2e7d32;
-    --text-color: #2e4d1b;
-    --background-color: #f1f8e9;
-    --link-color: #388e3c;
-    --border-color: #81c784;
-    --footer-text-color: #004d40;
-    --code-bg-color: #d3f5d6;
-    --not-found-bg-color: #e8f5e9;
-    --not-found-border-color: #388e3c;
-    --not-found-text-color: #1b5e20;
+    --line-height: 1.7;
+    --sitename-color: #2c1e0f;
+    --headings-color: #2c1e0f;
+    --text-color: #433422;
+    --background-color: #f9f5eb;
+    --link-color: #8b5a2b;
+    --border-color: #c8a87a;
+    --footer-text-color: #6b4c2a;
+    --code-bg-color: #ede8d0;
+    --not-found-bg-color: #ffe8cc;
+    --not-found-border-color: #c8843f;
+    --not-found-text-color: #6b2c1e;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --sitename-color: #b9f6ca;
-        --headings-color: #b9f6ca;
-        --text-color: #c8e6c9;
-        --background-color: #0f1b0f;
-        --link-color: #69f0ae;
-        --border-color: #1b5e20;
-        --footer-text-color: #b9f6ca;
-        --code-bg-color: #263d2a;
-        --not-found-bg-color: #2e4d1b;
-        --not-found-border-color: #69f0ae;
-        --not-found-text-color: #c8e6c9;
+        --sitename-color: #e8c99a;
+        --headings-color: #e8c99a;
+        --text-color: #c8a87a;
+        --background-color: #1a1008;
+        --link-color: #d4a84b;
+        --border-color: #3d2b1f;
+        --footer-text-color: #8a6a4a;
+        --code-bg-color: #2a1e0f;
+        --not-found-bg-color: #2a1500;
+        --not-found-border-color: #8b5a2b;
+        --not-found-text-color: #e8c99a;
     }
 }
 
@@ -116,6 +116,7 @@ blockquote {
     border-left: 5px solid var(--border-color);
     padding: 0.5rem 1rem;
     background-color: var(--code-bg-color);
+    font-style: italic;
 }
 
 pre {
@@ -128,6 +129,7 @@ pre code {
     padding: 1rem;
     white-space: pre;
     word-break: normal;
+    font-style: normal;
 }
 
 code {
@@ -136,6 +138,7 @@ code {
     border-radius: 3px;
     white-space: pre-wrap;
     word-break: break-word;
+    font-style: normal;
 }
 
 .april-ssg-notfound {

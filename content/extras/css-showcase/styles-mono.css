@@ -1,33 +1,33 @@
 :root {
-    --font-family: Verdana, system-ui, sans-serif;
+    --font-family: monospace;
     --base-font-size: 1em;
-    --line-height: 1.5;
-    --sitename-color: #1b5e20;
-    --headings-color: #2e7d32;
-    --text-color: #2e4d1b;
-    --background-color: #f1f8e9;
-    --link-color: #388e3c;
-    --border-color: #81c784;
-    --footer-text-color: #004d40;
-    --code-bg-color: #d3f5d6;
-    --not-found-bg-color: #e8f5e9;
-    --not-found-border-color: #388e3c;
-    --not-found-text-color: #1b5e20;
+    --line-height: 1.6;
+    --sitename-color: #000;
+    --headings-color: #000;
+    --text-color: #000;
+    --background-color: #fff;
+    --link-color: #000;
+    --border-color: #000;
+    --footer-text-color: #555;
+    --code-bg-color: #000;
+    --not-found-bg-color: #ff0;
+    --not-found-border-color: #000;
+    --not-found-text-color: #000;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --sitename-color: #b9f6ca;
-        --headings-color: #b9f6ca;
-        --text-color: #c8e6c9;
-        --background-color: #0f1b0f;
-        --link-color: #69f0ae;
-        --border-color: #1b5e20;
-        --footer-text-color: #b9f6ca;
-        --code-bg-color: #263d2a;
-        --not-found-bg-color: #2e4d1b;
-        --not-found-border-color: #69f0ae;
-        --not-found-text-color: #c8e6c9;
+        --sitename-color: #fff;
+        --headings-color: #fff;
+        --text-color: #ccc;
+        --background-color: #000;
+        --link-color: #fff;
+        --border-color: #555;
+        --footer-text-color: #888;
+        --code-bg-color: #fff;
+        --not-found-bg-color: #330;
+        --not-found-border-color: #ff0;
+        --not-found-text-color: #ff0;
     }
 }
 
@@ -46,7 +46,7 @@ img {
     max-width: 100%;
     height: auto;
     display: block;
-    background-color: var(--code-bg-color);
+    filter: grayscale(100%);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -62,12 +62,15 @@ header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 header a.site-title {
     font-size: x-large;
     font-weight: bold;
-    margin: 1rem 1rem 1rem 0;
+    margin: 1rem 1rem 0.5rem 0;
     color: var(--sitename-color);
     text-decoration: none;
 }
@@ -116,10 +119,11 @@ blockquote {
     border-left: 5px solid var(--border-color);
     padding: 0.5rem 1rem;
     background-color: var(--code-bg-color);
+    color: #FFF;
 }
 
 pre {
-    background-color: var(--code-bg-color);
+    border: 1px solid var(--border-color);
 }
 
 pre code {
@@ -128,12 +132,14 @@ pre code {
     padding: 1rem;
     white-space: pre;
     word-break: normal;
+    color: var(--background-color);
+    background-color: var(--code-bg-color);
 }
 
 code {
+    color: var(--background-color);
     background-color: var(--code-bg-color);
     padding: 0.1em 0.3em;
-    border-radius: 3px;
     white-space: pre-wrap;
     word-break: break-word;
 }
@@ -189,7 +195,6 @@ td {
 }
 
 th {
-    background-color: var(--code-bg-color);
     font-weight: bold;
 }
 

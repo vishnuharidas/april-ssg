@@ -1,34 +1,19 @@
+/* Forced dark theme — ignores OS preference */
 :root {
     --font-family: Verdana, system-ui, sans-serif;
     --base-font-size: 1em;
     --line-height: 1.5;
-    --sitename-color: #1b5e20;
-    --headings-color: #2e7d32;
-    --text-color: #2e4d1b;
-    --background-color: #f1f8e9;
-    --link-color: #388e3c;
-    --border-color: #81c784;
-    --footer-text-color: #004d40;
-    --code-bg-color: #d3f5d6;
-    --not-found-bg-color: #e8f5e9;
-    --not-found-border-color: #388e3c;
-    --not-found-text-color: #1b5e20;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --sitename-color: #b9f6ca;
-        --headings-color: #b9f6ca;
-        --text-color: #c8e6c9;
-        --background-color: #0f1b0f;
-        --link-color: #69f0ae;
-        --border-color: #1b5e20;
-        --footer-text-color: #b9f6ca;
-        --code-bg-color: #263d2a;
-        --not-found-bg-color: #2e4d1b;
-        --not-found-border-color: #69f0ae;
-        --not-found-text-color: #c8e6c9;
-    }
+    --sitename-color: #e2e8f0;
+    --headings-color: #f1f5f9;
+    --text-color: #cbd5e1;
+    --background-color: #0f172a;
+    --link-color: #60a5fa;
+    --border-color: #334155;
+    --footer-text-color: #94a3b8;
+    --code-bg-color: #1e293b;
+    --not-found-bg-color: #1a0a0a;
+    --not-found-border-color: #dc2626;
+    --not-found-text-color: #fca5a5;
 }
 
 body {

@@ -90,6 +90,8 @@ describe('loadConfig', () => {
         try {
             const cases = [
                 ['', ''],
+                ['/', ''],
+                ['///', ''],
                 ['public', '/public'],
                 ['/public/', '/public'],
                 ['///public///', '/public'],

@@ -17,7 +17,7 @@ It was a dark and stormy night in *Codeville*. Detective Byte was called to the 
 
 Detective Byte surveyed the messy codebase. Lines of JavaScript snaked across the screen like digital spaghetti.
 
-!["Macbook Pro on Brown Wooden Table"](/images/pexels-andrew-2312369.jpg)
+!["Macbook Pro on Brown Wooden Table"](../images/pexels-andrew-2312369.jpg)
 _Image: "Macbook Pro on Brown Wooden Table" - free to use photo by Andrew Neel from Pexels.com_
 
 

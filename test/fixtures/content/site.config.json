@@ -1,0 +1,27 @@
+{
+    "name": "Test Site",
+    "description": "A test site for automated testing",
+    "author": "Test Author",
+    "dirs": {
+        "templates": "../../../templates",
+        "css": "../../../templates/styles.css",
+        "posts": "posts",
+        "pages": "pages",
+        "extras": "extras",
+        "images": "images",
+        "output": "../output"
+    },
+    "menu": [
+        {
+            "title": "About",
+            "path": "/about"
+        },
+        {
+            "title": "External",
+            "path": "https://example.com"
+        }
+    ],
+    "basePath": "",
+    "siteUrl": "https://test.example.com",
+    "ogImage": "images/og.png"
+}

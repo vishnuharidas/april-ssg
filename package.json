@@ -16,7 +16,7 @@
   "scripts": {
     "build": "node build.js",
     "preview": "node preview.js",
-    "test": "node --test 'test/**/*.test.js'"
+    "test": "node --test"
   },
   "keywords": [
     "static-site-generator",

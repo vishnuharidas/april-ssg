@@ -223,16 +223,17 @@ describe('buildAllPosts', () => {
     it('returns sorted allPosts and allTags', () => {
         const { allPosts, allTags } = buildAllPosts(ctx);
 
-        assert.equal(allPosts.length, 3);
+        assert.equal(allPosts.length, 7);
 
-        // Verify sorted descending by date (kitchen-sink is newest)
-        assert.equal(allPosts[0].title, 'Markdown Kitchen Sink');
-        assert.equal(allPosts[1].title, 'Second Post');
-        assert.equal(allPosts[2].title, 'Hello World');
+        // Verify sorted descending by date
+        // 4 image-test posts share the same date (2025-01-01), then the original 3
+        assert.equal(allPosts[4].title, 'Markdown Kitchen Sink');
+        assert.equal(allPosts[5].title, 'Second Post');
+        assert.equal(allPosts[6].title, 'Hello World');
 
         // Verify allTags
         assert.ok(allTags['test']);
-        assert.equal(allTags['test'].length, 3, '"test" tag should have 3 posts');
+        assert.equal(allTags['test'].length, 7, '"test" tag should have 7 posts');
         assert.ok(allTags['greeting']);
         assert.equal(allTags['greeting'].length, 1);
         assert.ok(allTags['coding']);
@@ -276,10 +277,14 @@ describe('full build integration', () => {
 
     it('generates post HTML files', () => {
         const postFiles = fs.readdirSync(path.join(tmpDir, 'posts'));
-        assert.equal(postFiles.length, 3);
+        assert.equal(postFiles.length, 7);
         assert.ok(postFiles.includes('hello-world.html'));
         assert.ok(postFiles.includes('second-post.html'));
         assert.ok(postFiles.includes('markdown-kitchen-sink.html'));
+        assert.ok(postFiles.includes('image-test-fm-and-content.html'));
+        assert.ok(postFiles.includes('image-test-fm-no-content.html'));
+        assert.ok(postFiles.includes('image-test-no-fm-content.html'));
+        assert.ok(postFiles.includes('image-test-no-fm-no-content.html'));
 
         const html = fs.readFileSync(path.join(tmpDir, 'posts', 'hello-world.html'), 'utf-8');
         assert.ok(html.includes('Hello World'));
@@ -308,11 +313,13 @@ describe('full build integration', () => {
         assert.ok(fs.existsSync(path.join(tagDir, 'greeting', 'index.html')));
         assert.ok(fs.existsSync(path.join(tagDir, 'coding', 'index.html')));
 
-        // "test" tag page should list all 3 posts
+        // "test" tag page should list all 7 posts
         const testTagHtml = fs.readFileSync(path.join(tagDir, 'test', 'index.html'), 'utf-8');
         assert.ok(testTagHtml.includes('Hello World'));
         assert.ok(testTagHtml.includes('Second Post'));
         assert.ok(testTagHtml.includes('Markdown Kitchen Sink'));
+        assert.ok(testTagHtml.includes('Image Test: FM and Content'));
+        assert.ok(testTagHtml.includes('Image Test: No FM No Content'));
 
         // "greeting" tag page should only list first post
         const greetingTagHtml = fs.readFileSync(path.join(tagDir, 'greeting', 'index.html'), 'utf-8');
@@ -535,5 +542,98 @@ describe('non-empty basePath', () => {
     it('prepends basePath in RSS feed URLs', () => {
         assert.ok(rss.includes('https://test.example.com/blog'));
         assert.ok(rss.includes('https://test.example.com/blog/posts/hello-world'));
+    });
+});
+
+// ── OG Image Resolution Tests ───────────────────────────────────────
+
+describe('OG image resolution', () => {
+    const tmpDirs = [];
+    // Posts keyed by slug, each with { noBase, withBase } HTML strings
+    const posts = {};
+
+    function buildAllWithBasePath(basePath) {
+        const tmpDir = fs.mkdtempSync(path.join(__dirname, '.tmp-test-'));
+        tmpDirs.push(tmpDir);
+        const ctx = loadConfig(fixtureContentDir);
+        ctx.siteConfig.basePath = basePath;
+        ctx.publicDir = tmpDir;
+        ctx.publicPostsDir = path.join(tmpDir, 'posts');
+        initTemplates(ctx);
+        loadCss(ctx);
+        initMarked(ctx);
+        fs.ensureDirSync(ctx.publicPostsDir);
+        buildAllPosts(ctx);
+        return tmpDir;
+    }
+
+    function readPostHtml(tmpDir, slug) {
+        return fs.readFileSync(path.join(tmpDir, 'posts', `${slug}.html`), 'utf-8');
+    }
+
+    function extractOgImage(html) {
+        const match = html.match(/<meta[^>]*property="og:image"[^>]*content="([^"]+)"/);
+        assert.ok(match, 'should have og:image meta tag');
+        return match[1];
+    }
+
+    const slugs = [
+        'image-test-fm-and-content',
+        'image-test-fm-no-content',
+        'image-test-no-fm-content',
+        'image-test-no-fm-no-content',
+    ];
+
+    before(() => {
+        const noBaseDir = buildAllWithBasePath('');
+        const withBaseDir = buildAllWithBasePath('/blog');
+
+        for (const slug of slugs) {
+            posts[slug] = {
+                noBase: readPostHtml(noBaseDir, slug),
+                withBase: readPostHtml(withBaseDir, slug),
+            };
+        }
+    });
+
+    after(() => {
+        tmpDirs.forEach(dir => fs.removeSync(dir));
+    });
+
+    // ── Empty basePath ──────────────────────────────────────────────
+
+    it('prefers frontmatter image over content image (empty basePath)', () => {
+        // Has both fm image (/images/og.png) and content image (content-photo.png)
+        assert.equal(extractOgImage(posts['image-test-fm-and-content'].noBase), 'https://test.example.com/images/og.png');
+    });
+
+    it('uses frontmatter image when no content image (empty basePath)', () => {
+        assert.equal(extractOgImage(posts['image-test-fm-no-content'].noBase), 'https://test.example.com/images/og.png');
+    });
+
+    it('extracts content image when no frontmatter image (empty basePath)', () => {
+        assert.equal(extractOgImage(posts['image-test-no-fm-content'].noBase), 'https://test.example.com/images/content-photo.png');
+    });
+
+    it('falls back to default OG image when no images at all (empty basePath)', () => {
+        assert.equal(extractOgImage(posts['image-test-no-fm-no-content'].noBase), 'https://test.example.com/images/og.png');
+    });
+
+    // ── With basePath /blog ─────────────────────────────────────────
+
+    it('prefers frontmatter image over content image (with basePath)', () => {
+        assert.equal(extractOgImage(posts['image-test-fm-and-content'].withBase), 'https://test.example.com/blog/images/og.png');
+    });
+
+    it('uses frontmatter image when no content image (with basePath)', () => {
+        assert.equal(extractOgImage(posts['image-test-fm-no-content'].withBase), 'https://test.example.com/blog/images/og.png');
+    });
+
+    it('extracts content image without double-prefixing basePath', () => {
+        assert.equal(extractOgImage(posts['image-test-no-fm-content'].withBase), 'https://test.example.com/blog/images/content-photo.png');
+    });
+
+    it('falls back to default OG image when no images at all (with basePath)', () => {
+        assert.equal(extractOgImage(posts['image-test-no-fm-no-content'].withBase), 'https://test.example.com/blog/images/og.png');
     });
 });

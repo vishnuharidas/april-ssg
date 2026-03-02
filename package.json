@@ -1,6 +1,6 @@
 {
   "name": "april-ssg",
-  "version": "1.0.0",
+  "version": "2026.3.1",
   "description": "A simple, lightweight static site generator",
   "type": "module",
   "bin": {

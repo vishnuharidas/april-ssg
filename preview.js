@@ -78,7 +78,6 @@ function updatePostCache(postContent) {
 
 function incrementalBuild(changedFile) {
     const absPath = path.resolve(changedFile);
-    const relToContent = path.relative(ctx.contentDir, absPath);
     const relToTemplates = path.relative(ctx.templateDir, absPath);
 
     // Config changed → full rebuild

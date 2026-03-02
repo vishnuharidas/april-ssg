@@ -222,7 +222,6 @@ function runIncremental(changedFile) {
 
 function watchDir(dir) {
     if (!fs.existsSync(dir)) return;
-    const exts = new Set(['.md', '.markdown', '.html', '.css', '.json', '.xml']);
     const debounce = (fn, ms) => {
         let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
     };
@@ -231,18 +230,12 @@ function watchDir(dir) {
     try {
         fs.watch(dir, { recursive: true }, (_event, filename) => {
             if (!filename) return schedule(null);
-            const ext = path.extname(filename.toString()).toLowerCase();
-            if (exts.has(ext)) {
-                schedule(path.join(dir, filename.toString()));
-            }
+            schedule(path.join(dir, filename.toString()));
         });
     } catch {
         fs.watch(dir, {}, (_event, filename) => {
             if (!filename) return schedule(null);
-            const ext = path.extname(filename.toString()).toLowerCase();
-            if (exts.has(ext)) {
-                schedule(path.join(dir, filename.toString()));
-            }
+            schedule(path.join(dir, filename.toString()));
         });
     }
 }

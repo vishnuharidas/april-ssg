@@ -83,7 +83,7 @@ function incrementalBuild(changedFile) {
     // Config changed → full rebuild
     if (absPath === path.join(ctx.contentDir, 'site.config.json')) {
         console.log('🔄 Config changed — full rebuild');
-        fullBuild();
+        fullBuild(true);
         return;
     }
 

@@ -449,7 +449,13 @@ describe('markdown rendering', () => {
     it('resolves relative link path to absolute', () => {
         const linkMatch = html.match(/<a[^>]*>Relative link<\/a>/);
         assert.ok(linkMatch, 'should find the relative link');
-        assert.ok(linkMatch[0].includes('href="/pages/about"'), 'should resolve ../pages/about to /pages/about');
+        assert.ok(linkMatch[0].includes('href="/about"'), 'should resolve ../about to /about');
+    });
+
+    it('resolves dot-slash image path', () => {
+        const imgMatch = html.match(/<img[^>]*alt="Dot-slash image"[^>]*>/);
+        assert.ok(imgMatch, 'should find the dot-slash image');
+        assert.ok(imgMatch[0].includes('src="/images/og.png"'), 'should resolve ./images/og.png to /images/og.png');
     });
 
     // Code blocks

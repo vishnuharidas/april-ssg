@@ -46,7 +46,9 @@ This is a paragraph with **bold text**, *italic text*, and ***bold italic*** tog
 
 ![Simple image](https://example.com/photo.jpg)
 
-[Relative link](../pages/about)
+[Relative link](../about)
+
+![Dot-slash image](./images/og.png)
 
 ```javascript
 function hello() {

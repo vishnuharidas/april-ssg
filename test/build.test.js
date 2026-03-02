@@ -47,20 +47,36 @@ describe('loadConfig', () => {
     });
 
     it('prepends basePath to local menu links', () => {
-        const ctx = loadConfig(fixtureContentDir);
-        for (const item of ctx.siteConfig.menu) {
-            if (!item.path.startsWith('http')) {
-                assert.ok(item.path.startsWith(ctx.siteConfig.basePath));
-            }
+        const tmpContent = path.join(__dirname, 'fixtures', '_tmp_menu_test');
+        const fixtureConfig = JSON.parse(fs.readFileSync(path.join(fixtureContentDir, 'site.config.json'), 'utf-8'));
+
+        fs.ensureDirSync(tmpContent);
+        try {
+            const config = { ...fixtureConfig, basePath: 'blog' };
+            fs.writeFileSync(path.join(tmpContent, 'site.config.json'), JSON.stringify(config));
+            const ctx = loadConfig(tmpContent);
+
+            const aboutItem = ctx.siteConfig.menu.find(m => m.title === 'About');
+            assert.equal(aboutItem.path, '/blog/about');
+        } finally {
+            fs.removeSync(tmpContent);
         }
     });
 
     it('leaves external menu links unchanged', () => {
-        const ctx = loadConfig(fixtureContentDir);
-        for (const item of ctx.siteConfig.menu) {
-            if (item.path.startsWith('http')) {
-                assert.equal(item.path, 'https://example.com');
-            }
+        const tmpContent = path.join(__dirname, 'fixtures', '_tmp_menu_test');
+        const fixtureConfig = JSON.parse(fs.readFileSync(path.join(fixtureContentDir, 'site.config.json'), 'utf-8'));
+
+        fs.ensureDirSync(tmpContent);
+        try {
+            const config = { ...fixtureConfig, basePath: 'blog' };
+            fs.writeFileSync(path.join(tmpContent, 'site.config.json'), JSON.stringify(config));
+            const ctx = loadConfig(tmpContent);
+
+            const externalItem = ctx.siteConfig.menu.find(m => m.title === 'External');
+            assert.equal(externalItem.path, 'https://example.com');
+        } finally {
+            fs.removeSync(tmpContent);
         }
     });
 

@@ -239,17 +239,18 @@ describe('buildAllPosts', () => {
     it('returns sorted allPosts and allTags', () => {
         const { allPosts, allTags } = buildAllPosts(ctx);
 
-        assert.equal(allPosts.length, 7);
+        assert.equal(allPosts.length, 8);
 
         // Verify sorted descending by date
+        assert.equal(allPosts[0].title, 'HTML Escape Test');
         // 4 image-test posts share the same date (2025-01-01), then the original 3
-        assert.equal(allPosts[4].title, 'Markdown Kitchen Sink');
-        assert.equal(allPosts[5].title, 'Second Post');
-        assert.equal(allPosts[6].title, 'Hello World');
+        assert.equal(allPosts[5].title, 'Markdown Kitchen Sink');
+        assert.equal(allPosts[6].title, 'Second Post');
+        assert.equal(allPosts[7].title, 'Hello World');
 
         // Verify allTags
         assert.ok(allTags['test']);
-        assert.equal(allTags['test'].length, 7, '"test" tag should have 7 posts');
+        assert.equal(allTags['test'].length, 8, '"test" tag should have 8 posts');
         assert.ok(allTags['greeting']);
         assert.equal(allTags['greeting'].length, 1);
         assert.ok(allTags['coding']);
@@ -293,7 +294,7 @@ describe('full build integration', () => {
 
     it('generates post HTML files', () => {
         const postFiles = fs.readdirSync(path.join(tmpDir, 'posts'));
-        assert.equal(postFiles.length, 7);
+        assert.equal(postFiles.length, 8);
         assert.ok(postFiles.includes('hello-world.html'));
         assert.ok(postFiles.includes('second-post.html'));
         assert.ok(postFiles.includes('markdown-kitchen-sink.html'));
@@ -301,6 +302,7 @@ describe('full build integration', () => {
         assert.ok(postFiles.includes('image-test-fm-no-content.html'));
         assert.ok(postFiles.includes('image-test-no-fm-content.html'));
         assert.ok(postFiles.includes('image-test-no-fm-no-content.html'));
+        assert.ok(postFiles.includes('html-escape-test.html'));
 
         const html = fs.readFileSync(path.join(tmpDir, 'posts', 'hello-world.html'), 'utf-8');
         assert.ok(html.includes('Hello World'));
@@ -493,6 +495,48 @@ describe('markdown rendering', () => {
         assert.ok(html.includes('<th>Column A</th>'));
         assert.ok(html.includes('<td>Cell 1</td>'));
         assert.ok(html.includes('<td>Cell 6</td>'));
+    });
+});
+
+// ── HTML Escaping Tests ─────────────────────────────────────────────
+
+describe('HTML escaping in renderer', () => {
+    let html;
+
+    before(() => {
+        const tmpDir = fs.mkdtempSync(path.join(__dirname, '.tmp-test-'));
+        const ctx = createCtx(tmpDir);
+        const result = buildPost('2025-02-01-html-escape-test.md', ctx);
+        html = result.content;
+        fs.removeSync(tmpDir);
+    });
+
+    it('escapes special characters in image alt attribute', () => {
+        const imgMatch = html.match(/<img[^>]*>/);
+        assert.ok(imgMatch, 'should find an img tag');
+        assert.ok(imgMatch[0].includes('alt="Alt with &quot;quotes&quot; &amp; &lt;angles&gt;"'),
+            'alt should have escaped quotes, ampersands, and angle brackets');
+    });
+
+    it('escapes special characters in image title attribute', () => {
+        const imgMatch = html.match(/<img[^>]*>/);
+        assert.ok(imgMatch, 'should find an img tag');
+        assert.ok(imgMatch[0].includes('title="Title with &quot;quotes&quot; &amp; &lt;angles&gt;"'),
+            'title should have escaped quotes, ampersands, and angle brackets');
+    });
+
+    it('escapes special characters in link title attribute', () => {
+        const linkMatch = html.match(/<a[^>]*>Link with [\s\S]*?<\/a>/);
+        assert.ok(linkMatch, 'should find the link');
+        assert.ok(linkMatch[0].includes('title="Tooltip with &quot;quotes&quot; &amp; &lt;angles&gt;"'),
+            'link title should have escaped quotes, ampersands, and angle brackets');
+    });
+
+    it('escapes special characters in link href attribute', () => {
+        // Internal link should still work (no special chars to escape)
+        const linkMatch = html.match(/<a[^>]*>Safe internal link<\/a>/);
+        assert.ok(linkMatch, 'should find the safe internal link');
+        assert.ok(linkMatch[0].includes('href="/about"'));
     });
 });
 

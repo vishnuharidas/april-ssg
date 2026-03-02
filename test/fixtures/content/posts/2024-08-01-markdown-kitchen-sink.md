@@ -42,7 +42,11 @@ This is a paragraph with **bold text**, *italic text*, and ***bold italic*** tog
 
 ![Alt text for image](/images/og.png "A test image 400x300")
 
+![Relative image](../images/og.png "Relative 200x100")
+
 ![Simple image](https://example.com/photo.jpg)
+
+[Relative link](../pages/about)
 
 ```javascript
 function hello() {

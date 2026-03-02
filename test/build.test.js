@@ -63,6 +63,32 @@ describe('loadConfig', () => {
             }
         }
     });
+
+    it('normalizes basePath to start with / and have no trailing slash', () => {
+        // Use a temporary content dir with modified configs to test real loadConfig
+        const tmpContent = path.join(__dirname, 'fixtures', '_tmp_basepath_test');
+        const fixtureConfig = JSON.parse(fs.readFileSync(path.join(fixtureContentDir, 'site.config.json'), 'utf-8'));
+
+        fs.ensureDirSync(tmpContent);
+
+        try {
+            const cases = [
+                ['', ''],
+                ['public', '/public'],
+                ['/public/', '/public'],
+                ['///public///', '/public'],
+                ['/blog/site/', '/blog/site'],
+            ];
+            for (const [input, expected] of cases) {
+                const config = { ...fixtureConfig, basePath: input };
+                fs.writeFileSync(path.join(tmpContent, 'site.config.json'), JSON.stringify(config));
+                const ctx = loadConfig(tmpContent);
+                assert.equal(ctx.siteConfig.basePath, expected, `basePath "${input}" should normalize to "${expected}"`);
+            }
+        } finally {
+            fs.removeSync(tmpContent);
+        }
+    });
 });
 
 describe('initTemplates', () => {
@@ -406,8 +432,24 @@ describe('markdown rendering', () => {
         assert.ok(tag.includes('height="300"'), 'should parse height from title');
     });
 
+    it('resolves relative image path to absolute', () => {
+        const imgTag = html.match(/<img[^>]*alt="Relative image"[^>]*>/);
+        assert.ok(imgTag, 'should find the relative image tag');
+        const tag = imgTag[0];
+        assert.ok(tag.includes('src="/images/og.png"'), 'should resolve ../images/ to /images/');
+        assert.ok(tag.includes('width="200"'), 'should parse width');
+        assert.ok(tag.includes('height="100"'), 'should parse height');
+    });
+
     it('renders external image without basePath', () => {
         assert.ok(html.includes('src="https://example.com/photo.jpg"'));
+    });
+
+    // Relative links
+    it('resolves relative link path to absolute', () => {
+        const linkMatch = html.match(/<a[^>]*>Relative link<\/a>/);
+        assert.ok(linkMatch, 'should find the relative link');
+        assert.ok(linkMatch[0].includes('href="/pages/about"'), 'should resolve ../pages/about to /pages/about');
     });
 
     // Code blocks
@@ -422,5 +464,70 @@ describe('markdown rendering', () => {
         assert.ok(html.includes('<th>Column A</th>'));
         assert.ok(html.includes('<td>Cell 1</td>'));
         assert.ok(html.includes('<td>Cell 6</td>'));
+    });
+});
+
+// ── basePath Tests ──────────────────────────────────────────────────
+
+describe('non-empty basePath', () => {
+    let tmpDir;
+    let postHtml;
+    let indexHtml;
+    let rss;
+
+    before(() => {
+        tmpDir = fs.mkdtempSync(path.join(__dirname, '.tmp-test-'));
+        const ctx = loadConfig(fixtureContentDir);
+        // Override basePath to simulate subdirectory deployment
+        ctx.siteConfig.basePath = '/blog';
+        ctx.publicDir = tmpDir;
+        ctx.publicPostsDir = path.join(tmpDir, 'posts');
+        initTemplates(ctx);
+        loadCss(ctx);
+        initMarked(ctx);
+        fs.ensureDirSync(ctx.publicDir);
+        fs.ensureDirSync(ctx.publicPostsDir);
+
+        buildAllPages(ctx);
+        const { allPosts, allTags } = buildAllPosts(ctx);
+        buildIndex(allPosts, ctx);
+        buildRss(allPosts, ctx);
+        buildTags(allPosts, allTags, ctx);
+
+        postHtml = fs.readFileSync(path.join(tmpDir, 'posts', 'markdown-kitchen-sink.html'), 'utf-8');
+        indexHtml = fs.readFileSync(path.join(tmpDir, 'index.html'), 'utf-8');
+        rss = fs.readFileSync(path.join(tmpDir, 'rss.xml'), 'utf-8');
+    });
+
+    after(() => {
+        fs.removeSync(tmpDir);
+    });
+
+    it('prepends basePath to post links in index', () => {
+        assert.ok(indexHtml.includes('href="/blog/posts/hello-world"'));
+    });
+
+    it('prepends basePath to navigation links', () => {
+        assert.ok(indexHtml.includes('href="/blog/"'));
+        assert.ok(indexHtml.includes('href="/blog/rss.xml"'));
+    });
+
+    it('prepends basePath to images in markdown content', () => {
+        assert.ok(postHtml.includes('src="/blog/images/og.png"'));
+    });
+
+    it('prepends basePath to relative paths in markdown content', () => {
+        const imgTag = postHtml.match(/<img[^>]*alt="Relative image"[^>]*>/);
+        assert.ok(imgTag);
+        assert.ok(imgTag[0].includes('src="/blog/images/og.png"'));
+    });
+
+    it('prepends basePath to internal links in markdown content', () => {
+        assert.ok(postHtml.includes('href="/blog/about"'));
+    });
+
+    it('prepends basePath in RSS feed URLs', () => {
+        assert.ok(rss.includes('https://test.example.com/blog'));
+        assert.ok(rss.includes('https://test.example.com/blog/posts/hello-world'));
     });
 });

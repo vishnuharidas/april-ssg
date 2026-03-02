@@ -243,11 +243,6 @@ function watchDir(dir) {
 // --- Initial build, serve, and watch ---
 runIncremental(null); // full build on startup
 
-const siteConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-const outputDir = path.isAbsolute(siteConfig.dirs.output)
-    ? siteConfig.dirs.output
-    : path.join(contentDir, siteConfig.dirs.output);
-
-serveStatic(outputDir, 8080);
+serveStatic(ctx.publicDir, 8080);
 watchDir(contentDir);
 watchDir(ctx.templateDir);

@@ -448,6 +448,23 @@ describe('markdown rendering', () => {
         assert.ok(!match[0].includes('target="_blank"'));
     });
 
+    // Inline markdown inside links
+    it('renders bold text inside link', () => {
+        assert.match(html, /<a href="\/about"[^>]*><strong>Bold link<\/strong><\/a>/);
+    });
+
+    it('renders italic text inside link', () => {
+        assert.match(html, /<a href="\/about"[^>]*><em>Italic link<\/em><\/a>/);
+    });
+
+    it('renders inline code inside link', () => {
+        assert.match(html, /<a href="\/about"[^>]*><code>Code link<\/code><\/a>/);
+    });
+
+    it('renders strikethrough text inside link', () => {
+        assert.match(html, /<a href="\/about"[^>]*><del>Strikethrough link<\/del><\/a>/);
+    });
+
     // Images (custom renderer)
     it('renders local image with basePath prefix and dimensions from title', () => {
         const imgTag = html.match(/<img[^>]*alt="Alt text for image"[^>]*>/);
@@ -483,6 +500,36 @@ describe('markdown rendering', () => {
         const imgMatch = html.match(/<img[^>]*alt="Dot-slash image"[^>]*>/);
         assert.ok(imgMatch, 'should find the dot-slash image');
         assert.ok(imgMatch[0].includes('src="/images/og.png"'), 'should resolve ./images/og.png to /images/og.png');
+    });
+
+    // Linked images (image inside a link)
+    it('renders image wrapped in link', () => {
+        const match = html.match(/<a href="\/images\/og\.png"[^>]*>(<img[^>]*>)<\/a>/);
+        assert.ok(match, 'should render <a> wrapping an <img>');
+        assert.ok(match[1].includes('alt="Linked image"'), 'inner <img> should have correct alt');
+        assert.ok(match[1].includes('width="600"'), 'inner <img> should have width from title');
+        assert.ok(match[1].includes('height="400"'), 'inner <img> should have height from title');
+    });
+
+    it('renders external image inside internal link', () => {
+        const match = html.match(/<a href="\/gallery"[^>]*>(<img[^>]*>)<\/a>/);
+        assert.ok(match, 'should render <a> wrapping an external <img>');
+        assert.ok(match[1].includes('src="https://example.com/photo.jpg"'), 'inner <img> should keep external src');
+    });
+
+    it('renders mixed inline formatting inside link', () => {
+        const match = html.match(/<a href="\/about"[^>]*><strong>bold<\/strong> and <em>italic<\/em> together<\/a>/);
+        assert.ok(match, 'should render both <strong> and <em> inside a single <a>');
+    });
+
+    it('renders formatted text inside external link with SVG icon', () => {
+        const match = html.match(/<a href="https:\/\/example\.com"[^>]*><strong>Formatted external link<\/strong><svg/);
+        assert.ok(match, 'SVG icon should appear after the <strong>, not inside it');
+    });
+
+    it('renders inline HTML inside link', () => {
+        const match = html.match(/<a href="\/about"[^>]*>Click here <sup>beta<\/sup><\/a>/);
+        assert.ok(match, 'should preserve inline HTML elements inside link');
     });
 
     // Code blocks

@@ -40,6 +40,14 @@ This is a paragraph with **bold text**, *italic text*, and ***bold italic*** tog
 
 [Same-site link](https://test.example.com/page)
 
+[**Bold link**](/about)
+
+[*Italic link*](/about)
+
+[`Code link`](/about)
+
+[~~Strikethrough link~~](/about)
+
 ![Alt text for image](/images/og.png "A test image 400x300")
 
 ![Relative image](../images/og.png "Relative 200x100")
@@ -49,6 +57,16 @@ This is a paragraph with **bold text**, *italic text*, and ***bold italic*** tog
 [Relative link](../about)
 
 ![Dot-slash image](./images/og.png)
+
+[![Linked image](/images/og.png "Linked image 600x400")](/images/og.png)
+
+[![External linked image](https://example.com/photo.jpg)](/gallery)
+
+[**bold** and *italic* together](/about)
+
+[**Formatted external link**](https://example.com)
+
+[Click here <sup>beta</sup>](/about)
 
 ```javascript
 function hello() {
